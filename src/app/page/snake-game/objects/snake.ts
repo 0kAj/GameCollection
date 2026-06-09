@@ -1,22 +1,21 @@
 import { loadImage } from '../../../core/assets/image-loader';
-import { DIRECTIONS, SNAKE_BODY_SPRITE_SRC, SNAKE_HEAD_SPRITE_SRC } from '../logic/snake-game.constants';
+import { SNAKE_BODY_SPRITE_SRC, SNAKE_HEAD_SPRITE_SRC } from '../logic/snake-game.constants';
 import { GridSize } from '../models/grid-size';
-import { Vector2 } from '../models/vector2';
+import { Vector2 } from '../../../core/objects/vector2';
 import { drawGridSprite } from '../utils/draw-grid-sprite';
-import { addVector, reverseVector, sameVector } from '../utils/vector';
 
 export class Snake {
   private readonly headSprite = loadImage(SNAKE_HEAD_SPRITE_SRC);
   private readonly bodySprite = loadImage(SNAKE_BODY_SPRITE_SRC);
-  private direction: Vector2 = DIRECTIONS.right;
-  private pendingDirection: Vector2 = DIRECTIONS.right;
+  private direction: Vector2 = Vector2.RIGHT;
+  private pendingDirection: Vector2 = Vector2.RIGHT;
   private segments: Vector2[];
 
   constructor(start: Vector2) {
     this.segments = [
-      { x: start.x, y: start.y },
-      { x: start.x - 1, y: start.y },
-      { x: start.x - 2, y: start.y },
+      new Vector2(start.x, start.y),
+      new Vector2(start.x - 1, start.y),
+      new Vector2(start.x - 2, start.y),
     ];
   }
 
@@ -38,7 +37,7 @@ export class Snake {
   }
 
   willEat(food: Vector2): boolean {
-    return sameVector(this.nextHead, food);
+    return this.nextHead.sameVector(food);
   }
 
   hasHitWall(grid: GridSize): boolean {
@@ -48,7 +47,7 @@ export class Snake {
 
   hasHitSelf(): boolean {
     const head = this.head;
-    return this.segments.slice(1).some((segment) => sameVector(segment, head));
+    return this.segments.slice(1).some((segment) => segment.sameVector(head));
   }
 
   render(ctx: CanvasRenderingContext2D, grid: GridSize): void {
@@ -59,7 +58,7 @@ export class Snake {
   }
 
   get body(): Vector2[] {
-    return this.segments.map((segment) => ({ ...segment }));
+    return this.segments.slice(1);
   }
 
   private get head(): Vector2 {
@@ -67,10 +66,10 @@ export class Snake {
   }
 
   private get nextHead(): Vector2 {
-    return addVector(this.head, this.pendingDirection);
+    return this.head.add(this.pendingDirection);
   }
 
   private isReverse(direction: Vector2): boolean {
-    return reverseVector(direction, this.direction);
+    return this.direction.reverse().sameVector(direction);
   }
 }

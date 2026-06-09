@@ -2,10 +2,10 @@ import { drawGameOver } from '../../../core/rendering/draw-game-over';
 import { IGame } from '../../../core/engine/IGame';
 import { KeyboardInput } from '../../../core/input/KeyboardInput';
 import { GridSize } from '../models/grid-size';
-import { Vector2 } from '../models/vector2';
+import { Vector2 } from '../../../core/objects/vector2';
 import { Food } from '../objects/food';
 import { Snake } from '../objects/snake';
-import { DIRECTIONS, MIN_COLUMNS, MIN_ROWS, TARGET_CELL_SIZE, TICK_SECONDS } from './snake-game.constants';
+import { MIN_COLUMNS, MIN_ROWS, TARGET_CELL_SIZE, TICK_SECONDS } from './snake-game.constants';
 
 export class SnakeGameLogic implements IGame {
   private readonly input = new KeyboardInput();
@@ -80,10 +80,12 @@ export class SnakeGameLogic implements IGame {
 
   private reset(): void {
     const grid = this.grid;
-    this.snake = new Snake({
-      x: Math.floor(grid.columns / 2),
-      y: Math.floor(grid.rows / 2),
-    });
+    this.snake = new Snake(
+      new Vector2(
+        Math.floor(grid.columns / 2),
+        Math.floor(grid.rows / 2)
+      )
+    );
     this.food = new Food();
     this.food.respawn(grid, this.snake.body);
     this.updateScore();
@@ -92,19 +94,19 @@ export class SnakeGameLogic implements IGame {
 
   private readDirection(): Vector2 | undefined {
     if (this.input.horizontal > 0) {
-      return DIRECTIONS.right;
+      return Vector2.RIGHT;
     }
 
     if (this.input.horizontal < 0) {
-      return DIRECTIONS.left;
+      return Vector2.LEFT;
     }
 
     if (this.input.vertical > 0) {
-      return DIRECTIONS.down;
+      return Vector2.DOWN;
     }
 
     if (this.input.vertical < 0) {
-      return DIRECTIONS.up;
+      return Vector2.UP;
     }
 
     return undefined;
