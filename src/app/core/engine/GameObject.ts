@@ -1,3 +1,5 @@
+import { drawLoadedImage } from '../rendering/draw-loaded-image';
+
 export abstract class GameObject {
   constructor(
     public x: number,
@@ -12,10 +14,6 @@ export abstract class GameObject {
   abstract render(ctx: CanvasRenderingContext2D): void;
 
   protected renderSprite(ctx: CanvasRenderingContext2D): void {
-    if (!this.sprite.complete || this.sprite.naturalWidth === 0 || this.width <= 0 || this.height <= 0) {
-      return;
-    }
-
-    ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height);
+    drawLoadedImage(ctx, this.sprite, this.x, this.y, this.width, this.height);
   }
 }

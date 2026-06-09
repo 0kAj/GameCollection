@@ -15,10 +15,11 @@ This project is a small Angular game collection. Each game should live on its ow
 ## Current Routes
 
 ```text
+/snake
 /collector
 ```
 
-The default route redirects to `/collector`.
+The default route redirects to `/snake`.
 
 ## Current Project Structure
 
@@ -36,21 +37,35 @@ src/app/
 │       └── key-listener-registration.ts
 │
 ├── page/
-│   └── collector-game/
-│       ├── collector-game.html
-│       ├── collector-game.css
-│       ├── collector-game.ts
+│   ├── collector-game/
+│   │   ├── collector-game.html
+│   │   ├── collector-game.css
+│   │   ├── collector-game.ts
+│   │   ├── logic/
+│   │   │   ├── collector-game.constants.ts
+│   │   │   └── collector-game.logic.ts
+│   │   ├── models/
+│   │   │   ├── board-size.ts
+│   │   │   └── bounds.ts
+│   │   ├── objects/
+│   │   │   ├── collectible.ts
+│   │   │   └── player.ts
+│   │   └── utils/
+│   │       └── clamp.ts
+│
+│   └── snake-game/
+│       ├── snake-game.html
+│       ├── snake-game.css
+│       ├── snake-game.ts
 │       ├── logic/
-│       │   ├── collector-game.constants.ts
-│       │   └── collector-game.logic.ts
+│       │   ├── snake-game.constants.ts
+│       │   └── snake-game.logic.ts
 │       ├── models/
-│       │   ├── board-size.ts
-│       │   └── bounds.ts
-│       ├── objects/
-│       │   ├── collectible.ts
-│       │   └── player.ts
-│       └── utils/
-│           └── clamp.ts
+│       │   ├── grid-size.ts
+│       │   └── vector2.ts
+│       └── objects/
+│           ├── food.ts
+│           └── snake.ts
 │
 └── assets/
     ├── food/
@@ -101,6 +116,27 @@ Collectible:
 
 The canvas fills the visible screen. The actual canvas width and height are updated from the browser layout, so the full visible board is playable, not only visually stretched.
 
+## Snake Game
+
+The snake game is the current default route.
+
+Snake:
+
+- Uses `assets/pets/Mouse.png` for the head
+- Uses `assets/pets/Mouse_bg.png` for body and tail parts
+- Moves on a visible grid
+- Turns with WASD or arrow keys
+- Grows when it reaches food
+- Ends the game when it hits a wall or itself
+
+Food:
+
+- Uses `assets/food/apple.png`
+- Spawns on an empty grid cell
+- Never spawns inside the snake body
+
+The snake board fills the visible screen. The grid is calculated from the canvas size so cells cover the whole play area.
+
 ## Asset Handling
 
 Images are stored in `src/app/assets`.
@@ -119,6 +155,7 @@ Use relative asset URLs like:
 
 ```text
 assets/pets/Mouse.png
+assets/pets/Mouse_bg.png
 assets/food/apple.png
 ```
 

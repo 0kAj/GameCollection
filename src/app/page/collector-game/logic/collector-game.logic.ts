@@ -1,3 +1,4 @@
+import { drawGameOver } from '../../../core/rendering/draw-game-over';
 import { IGame } from '../../../core/engine/IGame';
 import { KeyboardInput } from '../../../core/input/KeyboardInput';
 import { BoardSize } from '../models/board-size';
@@ -55,7 +56,7 @@ export class CollectorGameLogic implements IGame {
     this.drawHud();
 
     if (this.gameOver) {
-      this.drawGameOver();
+      drawGameOver(this.ctx, 'The apple vanished.');
     }
   }
 
@@ -105,23 +106,6 @@ export class CollectorGameLogic implements IGame {
     this.ctx.fillStyle = '#94a3b8';
     this.ctx.font = '14px Inter, system-ui, sans-serif';
     this.ctx.fillText('WASD / arrow keys', 20, this.board.height - 16);
-  }
-
-  private drawGameOver(): void {
-    const board = this.board;
-
-    this.ctx.fillStyle = 'rgba(15, 23, 42, 0.76)';
-    this.ctx.fillRect(0, 0, board.width, board.height);
-
-    this.ctx.fillStyle = '#f8fafc';
-    this.ctx.font = '32px Inter, system-ui, sans-serif';
-    this.ctx.textAlign = 'center';
-    this.ctx.fillText('Game over', board.width / 2, board.height / 2 - 12);
-
-    this.ctx.fillStyle = '#cbd5e1';
-    this.ctx.font = '16px Inter, system-ui, sans-serif';
-    this.ctx.fillText('The apple vanished.', board.width / 2, board.height / 2 + 22);
-    this.ctx.textAlign = 'start';
   }
 
   private updateScore(): void {
