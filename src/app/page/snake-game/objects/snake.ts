@@ -58,7 +58,7 @@ export class Snake {
   }
 
   get body(): Vector2[] {
-    return this.segments.slice(1);
+    return this.segments;
   }
 
   private get head(): Vector2 {
