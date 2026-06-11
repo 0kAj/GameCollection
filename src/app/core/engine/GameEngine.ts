@@ -1,15 +1,15 @@
+import { Injectable } from '@angular/core';
 import { IGame } from './IGame';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class GameEngine {
 
   private running = false;
   private lastTime = 0;
 
   private game?: IGame;
-
-  constructor(
-    private ctx: CanvasRenderingContext2D
-  ) {}
 
   load(game: IGame) {
     this.game?.destroy?.();

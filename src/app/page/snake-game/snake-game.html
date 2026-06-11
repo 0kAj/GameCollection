@@ -2,8 +2,8 @@
   <header class="snake-header">
     <h2>Snake</h2>
     <div class="snake-controls">
-      <span class="snake-score">Score: {{ score() }}</span>
-      @if (gameOver()) {
+      <span class="snake-score">Score: {{ score }}</span>
+      @if (gameOver) {
         <span class="snake-score">Game over</span>
       }
       <button type="button" (click)="restart()">Restart</button>

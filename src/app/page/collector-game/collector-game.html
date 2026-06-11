@@ -2,8 +2,8 @@
   <header class="collector-header">
     <h2>Collector</h2>
     <div class="collector-controls">
-      <span class="collector-score">Score: {{ score() }}</span>
-      @if (gameOver()) {
+      <span class="collector-score">Score: {{ score }}</span>
+      @if (gameOver) {
         <span class="collector-score">Game over</span>
       }
       <button type="button" (click)="restart()">Restart</button>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, OnDestroy, ViewChild, signal } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import { GameEngine } from './GameEngine';
 import { IGame } from './IGame';
 
@@ -6,12 +6,13 @@ import { IGame } from './IGame';
 export abstract class CanvasGameComponent<TGame extends IGame> implements AfterViewInit, OnDestroy {
   @ViewChild('canvas', { static: true }) private canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  protected readonly score = signal(0);
-  protected readonly gameOver = signal(false);
+  public score = 0;
+  public gameOver = false;
 
-  private engine?: GameEngine;
   private game?: TGame;
   private resizeObserver?: ResizeObserver;
+
+  constructor(private engine: GameEngine) {}
 
   ngAfterViewInit(): void {
     const canvas = this.canvasRef.nativeElement;
@@ -21,7 +22,6 @@ export abstract class CanvasGameComponent<TGame extends IGame> implements AfterV
       throw new Error('Unable to initialize canvas rendering context');
     }
 
-    this.engine = new GameEngine(context);
     this.resizeCanvas();
     this.resizeObserver = new ResizeObserver(() => this.resizeCanvas());
     this.resizeObserver.observe(canvas);
@@ -29,8 +29,8 @@ export abstract class CanvasGameComponent<TGame extends IGame> implements AfterV
   }
 
   protected restart(): void {
-    this.score.set(0);
-    this.gameOver.set(false);
+    this.score = 0;
+    this.gameOver = false;
 
     const context = this.canvasRef.nativeElement.getContext('2d');
     if (!context) {
@@ -39,8 +39,8 @@ export abstract class CanvasGameComponent<TGame extends IGame> implements AfterV
 
     this.game = this.createGame(
       context,
-      (score) => this.score.set(score),
-      (gameOver) => this.gameOver.set(gameOver)
+      (score) => this.score = score,
+      (gameOver) => this.gameOver = gameOver
     );
     this.engine?.load(this.game);
     this.engine?.start();
