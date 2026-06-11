@@ -8,7 +8,6 @@ import { Snake } from '../objects/snake';
 import { MIN_COLUMNS, MIN_ROWS, TARGET_CELL_SIZE, TICK_SECONDS } from './snake-game.constants';
 
 export class SnakeGameLogic implements IGame {
-  private readonly input = new KeyboardInput();
   private snake!: Snake;
   private food!: Food;
   private score = 0;
@@ -16,6 +15,7 @@ export class SnakeGameLogic implements IGame {
   private gameOver = false;
 
   constructor(
+    private input: KeyboardInput,
     private readonly ctx: CanvasRenderingContext2D,
     private readonly notifyScore: (score: number) => void,
     private readonly notifyGameOver: (gameOver: boolean) => void

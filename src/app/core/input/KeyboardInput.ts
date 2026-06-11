@@ -1,5 +1,9 @@
+import { Injectable } from '@angular/core';
 import { KeyListenerRegistration } from './key-listener-registration';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class KeyboardInput {
   private readonly activeKeys = new Set<string>();
   private readonly listeners: KeyListenerRegistration[] = [];

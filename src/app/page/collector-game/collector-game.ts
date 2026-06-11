@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CanvasGameComponent } from '../../core/engine/CanvasGameComponent';
 import { CollectorGameLogic } from './logic/collector-game.logic';
 import { GameEngine } from '../../core/engine/GameEngine';
+import { KeyboardInput } from '../../core/input/KeyboardInput';
 
 @Component({
   standalone: true,
@@ -12,7 +13,7 @@ import { GameEngine } from '../../core/engine/GameEngine';
 })
 export class CollectorGame extends CanvasGameComponent<CollectorGameLogic> {
 
-  constructor(engine: GameEngine) {
+  constructor(engine: GameEngine, private input: KeyboardInput) {
     super(engine);
   }
 
@@ -23,6 +24,7 @@ export class CollectorGame extends CanvasGameComponent<CollectorGameLogic> {
     notifyGameOver: (gameOver: boolean) => void
   ): CollectorGameLogic {
     return new CollectorGameLogic(
+      this.input,
       context,
       notifyScore,
       notifyGameOver

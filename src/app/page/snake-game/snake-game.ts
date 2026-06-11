@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { CanvasGameComponent } from '../../core/engine/CanvasGameComponent';
 import { SnakeGameLogic } from './logic/snake-game.logic';
 import { GameEngine } from '../../core/engine/GameEngine';
+import { KeyboardInput } from '../../core/input/KeyboardInput';
 
 @Component({
   standalone: true,
@@ -13,7 +14,7 @@ import { GameEngine } from '../../core/engine/GameEngine';
 })
 export class SnakeGame extends CanvasGameComponent<SnakeGameLogic> {
 
-  constructor(engine: GameEngine) {
+  constructor(engine: GameEngine, private input: KeyboardInput) {
     super(engine);
   }
 
@@ -23,6 +24,7 @@ export class SnakeGame extends CanvasGameComponent<SnakeGameLogic> {
     notifyGameOver: (gameOver: boolean) => void
   ): SnakeGameLogic {
     return new SnakeGameLogic(
+      this.input,
       context,
       notifyScore,
       notifyGameOver

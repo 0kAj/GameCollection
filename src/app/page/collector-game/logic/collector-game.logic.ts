@@ -6,13 +6,13 @@ import { Collectible } from '../objects/collectible';
 import { Player } from '../objects/player';
 
 export class CollectorGameLogic implements IGame {
-  private readonly input = new KeyboardInput();
   private readonly player = new Player(280, 220, this.input, () => this.board);
   private readonly collectible = new Collectible();
   private score = 0;
   private gameOver = false;
 
   constructor(
+    private input: KeyboardInput,
     private readonly ctx: CanvasRenderingContext2D,
     private readonly notifyScore: (score: number) => void,
     private readonly notifyGameOver: (gameOver: boolean) => void
