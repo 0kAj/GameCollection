@@ -14,6 +14,8 @@ export class SnakeGameLogic implements IGame {
   private elapsed = 0;
   private gameOver = false;
 
+  private currentGrid!: GridSize;
+
   constructor(
     private input: KeyboardInput,
     private readonly ctx: CanvasRenderingContext2D,
@@ -33,6 +35,8 @@ export class SnakeGameLogic implements IGame {
       return;
     }
 
+    this.currentGrid = this.grid;
+
     const requestedDirection = this.readDirection();
     if (requestedDirection) {
       this.snake.setDirection(requestedDirection);
@@ -44,11 +48,10 @@ export class SnakeGameLogic implements IGame {
     }
 
     this.elapsed = 0;
-    const grid = this.grid;
     const grows = this.snake.willEat(this.food.position);
     this.snake.move(grows);
 
-    if (this.snake.hasHitWall(grid) || this.snake.hasHitSelf()) {
+    if (this.snake.hasHitWall(this.currentGrid) || this.snake.hasHitSelf()) {
       this.gameOver = true;
       this.updateGameOver();
       return;
@@ -57,7 +60,7 @@ export class SnakeGameLogic implements IGame {
     if (grows) {
       this.score += 1;
       this.updateScore();
-      this.food.respawn(grid, this.snake.body);
+      this.food.respawn(this.currentGrid, this.snake.body);
     }
   }
 
@@ -67,15 +70,10 @@ export class SnakeGameLogic implements IGame {
     this.drawGrid(grid);
     this.food.render(this.ctx, grid);
     this.snake.render(this.ctx, grid);
-    this.drawHud();
 
     if (this.gameOver) {
       drawGameOver(this.ctx, 'The snake crashed.');
     }
-  }
-
-  destroy(): void {
-    this.input.destroy();
   }
 
   private reset(): void {
@@ -137,12 +135,6 @@ export class SnakeGameLogic implements IGame {
       this.ctx.lineTo(this.ctx.canvas.width, canvasY);
       this.ctx.stroke();
     }
-  }
-
-  private drawHud(): void {
-    this.ctx.fillStyle = '#f8fafc';
-    this.ctx.font = '18px Inter, system-ui, sans-serif';
-    this.ctx.fillText(`Score: ${this.score}`, 20, 28);
   }
 
   private updateScore(): void {

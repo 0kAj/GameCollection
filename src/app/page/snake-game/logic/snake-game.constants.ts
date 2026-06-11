@@ -1,5 +1,3 @@
-import { Vector2 } from '../../../core/objects/vector2';
-
 export const TARGET_CELL_SIZE = 36;
 export const MIN_COLUMNS = 12;
 export const MIN_ROWS = 10;

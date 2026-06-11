@@ -6,7 +6,7 @@ import { Collectible } from '../objects/collectible';
 import { Player } from '../objects/player';
 
 export class CollectorGameLogic implements IGame {
-  private readonly player = new Player(280, 220, this.input, () => this.board);
+  private readonly player;
   private readonly collectible = new Collectible();
   private score = 0;
   private gameOver = false;
@@ -15,8 +15,10 @@ export class CollectorGameLogic implements IGame {
     private input: KeyboardInput,
     private readonly ctx: CanvasRenderingContext2D,
     private readonly notifyScore: (score: number) => void,
-    private readonly notifyGameOver: (gameOver: boolean) => void
+    private readonly notifyGameOver: (gameOver: boolean) => void,
   ) {
+    this.player = new Player(280, 220, this.input, () => this.board);
+
     this.respawnCollectible();
     this.updateScore();
     this.updateGameOver();
@@ -58,10 +60,6 @@ export class CollectorGameLogic implements IGame {
     if (this.gameOver) {
       drawGameOver(this.ctx, 'The apple vanished.');
     }
-  }
-
-  destroy(): void {
-    this.input.destroy();
   }
 
   private respawnCollectible(): void {
