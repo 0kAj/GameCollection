@@ -5,12 +5,12 @@ import { CollectorGameLogic } from './logic/collector-game.logic';
 import { GameEngine } from '../../core/engine/GameEngine';
 import { KeyboardInput } from '../../core/input/KeyboardInput';
 import { GameEvents } from '../../core/engine/GameEvents';
-import { DecimalPipe } from '@angular/common';
+import { TimeFormatPipe } from '../../../pipes/time-format-pipe';
 
 @Component({
   standalone: true,
   selector: 'app-collector-game',
-  imports: [DecimalPipe],
+  imports: [TimeFormatPipe],
   templateUrl: './collector-game.html',
   styleUrls: ['./collector-game.css'],
 })
