@@ -1,5 +1,5 @@
 import { GridSize } from '../models/grid-size';
-import { Vector2 } from '../../../core/objects/vector2';
+import { Vector2 } from '../../../core/models/vector2';
 import { drawLoadedImage } from '../../../core/rendering/draw-loaded-image';
 
 export function drawGridSprite(

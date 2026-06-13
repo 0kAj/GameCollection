@@ -1,9 +1,11 @@
 import { drawGameOver } from '../../../core/rendering/draw-game-over';
 import { IGame } from '../../../core/engine/IGame';
 import { KeyboardInput } from '../../../core/input/KeyboardInput';
-import { BoardSize } from '../models/board-size';
 import { Collectible } from '../objects/collectible';
 import { Player } from '../objects/player';
+import { Size } from '../../../core/models/size';
+import { Rect2 } from '../../../core/models/rect2';
+import { Vector2 } from '../../../core/models/vector2';
 
 export class CollectorGameLogic implements IGame {
   private readonly player;
@@ -17,7 +19,7 @@ export class CollectorGameLogic implements IGame {
     private readonly notifyScore: (score: number) => void,
     private readonly notifyGameOver: (gameOver: boolean) => void,
   ) {
-    this.player = new Player(280, 220, this.input, () => this.board);
+    this.player = new Player(new Vector2(280, 220), this.input, () => this.board);
 
     this.respawnCollectible();
     this.updateScore();
@@ -65,19 +67,18 @@ export class CollectorGameLogic implements IGame {
   private respawnCollectible(): void {
     const board = this.board;
 
-    this.collectible.respawn(board.width, board.height, {
-      x: this.player.x,
-      y: this.player.y,
-      width: this.player.width,
-      height: this.player.height,
-    });
+    this.collectible.respawn(
+      board.width,
+      board.height,
+      new Rect2(this.player.position, this.player.width, this.player.height),
+    );
   }
 
   private hasCollected(): boolean {
-    const playerCenterX = this.player.x + this.player.width / 2;
-    const playerCenterY = this.player.y + this.player.height / 2;
-    const itemCenterX = this.collectible.x + this.collectible.width / 2;
-    const itemCenterY = this.collectible.y + this.collectible.height / 2;
+    const playerCenterX = this.player.position.x + this.player.width / 2;
+    const playerCenterY = this.player.position.y + this.player.height / 2;
+    const itemCenterX = this.collectible.position.x + this.collectible.width / 2;
+    const itemCenterY = this.collectible.position.y + this.collectible.height / 2;
     const distance = Math.hypot(playerCenterX - itemCenterX, playerCenterY - itemCenterY);
     return distance < (this.player.width + this.collectible.width) * 0.45;
   }
@@ -114,7 +115,7 @@ export class CollectorGameLogic implements IGame {
     this.notifyGameOver(this.gameOver);
   }
 
-  private get board(): BoardSize {
+  private get board(): Size {
     return {
       width: this.ctx.canvas.width,
       height: this.ctx.canvas.height,

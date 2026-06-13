@@ -2,7 +2,7 @@ import { drawGameOver } from '../../../core/rendering/draw-game-over';
 import { IGame } from '../../../core/engine/IGame';
 import { KeyboardInput } from '../../../core/input/KeyboardInput';
 import { GridSize } from '../models/grid-size';
-import { Vector2 } from '../../../core/objects/vector2';
+import { Vector2 } from '../../../core/models/vector2';
 import { Food } from '../objects/food';
 import { Snake } from '../objects/snake';
 import { MIN_COLUMNS, MIN_ROWS, TARGET_CELL_SIZE, TICK_SECONDS } from './snake-game.constants';

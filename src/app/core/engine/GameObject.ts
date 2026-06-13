@@ -1,9 +1,9 @@
+import { Vector2 } from '../models/vector2';
 import { drawLoadedImage } from '../rendering/draw-loaded-image';
 
 export abstract class GameObject {
   constructor(
-    public x: number,
-    public y: number,
+    public position: Vector2,
     public width: number,
     public height: number,
     public sprite: HTMLImageElement
@@ -14,6 +14,6 @@ export abstract class GameObject {
   abstract render(ctx: CanvasRenderingContext2D): void;
 
   protected renderSprite(ctx: CanvasRenderingContext2D): void {
-    drawLoadedImage(ctx, this.sprite, this.x, this.y, this.width, this.height);
+    drawLoadedImage(ctx, this.sprite, this.position.x, this.position.y, this.width, this.height);
   }
 }

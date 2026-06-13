@@ -1,7 +1,7 @@
 import { loadImage } from '../../../core/assets/image-loader';
 import { FOOD_SPRITE_SRC } from '../logic/snake-game.constants';
 import { GridSize } from '../models/grid-size';
-import { Vector2 } from '../../../core/objects/vector2';
+import { Vector2 } from '../../../core/models/vector2';
 import { drawGridSprite } from '../utils/draw-grid-sprite';
 
 export class Food {
