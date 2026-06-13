@@ -7,16 +7,18 @@ import { Size } from '../../../core/models/size';
 import { Rect2 } from '../../../core/models/rect2';
 import { Vector2 } from '../../../core/models/vector2';
 import { COLLECTIBLES_COUNT } from './collector-game.constants';
-import { StatManager } from '../../../shared/stat-manager';
+import { GameEvents } from '../../../core/engine/GameEvents';
 
 export class CollectorGameLogic implements IGame {
   private readonly player;
   private readonly collectibles: Collectible[] = [];
 
+  private isGameOver = false;
+
   constructor(
     private input: KeyboardInput,
     private readonly ctx: CanvasRenderingContext2D,
-    private readonly statManager: StatManager,
+    private readonly events: GameEvents
   ) {
     this.player = new Player(new Vector2(280, 220), this.input, () => this.board);
 
@@ -27,12 +29,10 @@ export class CollectorGameLogic implements IGame {
     }
   }
 
-  start(): void {
-    this.statManager.updateGameOver(false);
-  }
+  start(): void { }
 
   update(delta: number): void {
-    if (this.statManager.gameOver()) {
+    if (this.isGameOver) {
       return;
     }
 
@@ -43,7 +43,7 @@ export class CollectorGameLogic implements IGame {
 
       c.update(delta);
       if (this.hasCollected(c)) {
-        this.statManager.addScore(c.scoreValue);
+        this.events.onScore(c.scoreValue);
         this.respawnCollectible(c);
       }
     });
@@ -51,7 +51,8 @@ export class CollectorGameLogic implements IGame {
     const allVanished = this.collectibles.every((c) => c.hasVanished);
 
     if (allVanished) {
-      this.statManager.updateGameOver(true);
+      this.isGameOver = true;
+      this.events.onGameOver();
     }
   }
 
@@ -61,8 +62,8 @@ export class CollectorGameLogic implements IGame {
     this.collectibles.forEach((c) => c.render(this.ctx));
     this.player.render(this.ctx);
 
-    if (this.statManager.gameOver()) {
-      drawGameOver(this.ctx, 'The apple vanished.');
+    if (this.isGameOver) {
+      drawGameOver(this.ctx, 'The apple vanished.'); //todo make it a component!!!
     }
   }
 

@@ -1,18 +1,17 @@
-import { AfterViewInit, Directive, ElementRef, OnDestroy, ViewChild} from '@angular/core';
+import { StatManager } from './../../shared/stat-manager';
+import { AfterViewInit, Directive, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { GameEngine } from './GameEngine';
 import { IGame } from './IGame';
+import { GameEvents } from './GameEvents';
 
 @Directive()
 export abstract class CanvasGameComponent<TGame extends IGame> implements AfterViewInit, OnDestroy {
   @ViewChild('canvas', { static: true }) private canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  public score = 0;
-  public gameOver = false;
-
   private game?: TGame;
   private resizeObserver?: ResizeObserver;
 
-  constructor(private engine: GameEngine) {}
+  constructor(private engine: GameEngine, protected statManager: StatManager) {}
 
   ngAfterViewInit(): void {
     const canvas = this.canvasRef.nativeElement;
@@ -29,19 +28,15 @@ export abstract class CanvasGameComponent<TGame extends IGame> implements AfterV
   }
 
   protected restart(): void {
-    this.score = 0;
-    this.gameOver = false;
-
     const context = this.canvasRef.nativeElement.getContext('2d');
     if (!context) {
       return;
     }
 
-    this.game = this.createGame(
-      context,
-      (score) => this.score = score,
-      (gameOver) => this.gameOver = gameOver
-    );
+    this.game = this.createGame(context, {
+      onScore: (v) => this.statManager.addScore(v),
+      onGameOver: () => this.statManager.updateGameOver(true),
+    });
     this.engine?.load(this.game);
     this.engine?.start();
   }
@@ -51,11 +46,7 @@ export abstract class CanvasGameComponent<TGame extends IGame> implements AfterV
     this.engine?.stop();
   }
 
-  protected abstract createGame(
-    context: CanvasRenderingContext2D,
-    notifyScore: (score: number) => void,
-    notifyGameOver: (gameOver: boolean) => void
-  ): TGame;
+  protected abstract createGame(context: CanvasRenderingContext2D, events: GameEvents): TGame;
 
   private resizeCanvas(): void {
     const canvas = this.canvasRef.nativeElement;

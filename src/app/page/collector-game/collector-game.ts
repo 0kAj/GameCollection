@@ -4,6 +4,7 @@ import { CanvasGameComponent } from '../../core/engine/CanvasGameComponent';
 import { CollectorGameLogic } from './logic/collector-game.logic';
 import { GameEngine } from '../../core/engine/GameEngine';
 import { KeyboardInput } from '../../core/input/KeyboardInput';
+import { GameEvents } from '../../core/engine/GameEvents';
 
 @Component({
   standalone: true,
@@ -13,21 +14,15 @@ import { KeyboardInput } from '../../core/input/KeyboardInput';
   styleUrls: ['./collector-game.css'],
 })
 export class CollectorGame extends CanvasGameComponent<CollectorGameLogic> {
-
-  constructor(engine: GameEngine, private input: KeyboardInput, public statManager: StatManager) {
-    super(engine);
+  constructor(
+    engine: GameEngine,
+    statManager: StatManager,
+    private input: KeyboardInput,
+  ) {
+    super(engine, statManager);
   }
 
-
-  protected createGame(
-    context: CanvasRenderingContext2D,
-    notifyScore: (score: number) => void,
-    notifyGameOver: (gameOver: boolean) => void
-  ): CollectorGameLogic {
-    return new CollectorGameLogic(
-      this.input,
-      context,
-      this.statManager
-    );
+  protected createGame(context: CanvasRenderingContext2D, events: GameEvents): CollectorGameLogic {
+    return new CollectorGameLogic(this.input, context, events);
   }
 }

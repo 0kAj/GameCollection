@@ -4,6 +4,8 @@ import { CanvasGameComponent } from '../../core/engine/CanvasGameComponent';
 import { SnakeGameLogic } from './logic/snake-game.logic';
 import { GameEngine } from '../../core/engine/GameEngine';
 import { KeyboardInput } from '../../core/input/KeyboardInput';
+import { StatManager } from '../../shared/stat-manager';
+import { GameEvents } from '../../core/engine/GameEvents';
 
 @Component({
   standalone: true,
@@ -14,20 +16,18 @@ import { KeyboardInput } from '../../core/input/KeyboardInput';
 })
 export class SnakeGame extends CanvasGameComponent<SnakeGameLogic> {
 
-  constructor(engine: GameEngine, private input: KeyboardInput) {
-    super(engine);
+  constructor(engine: GameEngine, statManager: StatManager, private input: KeyboardInput) {
+    super(engine, statManager);
   }
 
   protected createGame(
     context: CanvasRenderingContext2D,
-    notifyScore: (score: number) => void,
-    notifyGameOver: (gameOver: boolean) => void
+    events: GameEvents
   ): SnakeGameLogic {
     return new SnakeGameLogic(
       this.input,
       context,
-      notifyScore,
-      notifyGameOver
+      events
     );
   }
 }

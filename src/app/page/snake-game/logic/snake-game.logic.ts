@@ -6,32 +6,28 @@ import { Vector2 } from '../../../core/models/vector2';
 import { Food } from '../objects/food';
 import { Snake } from '../objects/snake';
 import { MIN_COLUMNS, MIN_ROWS, TARGET_CELL_SIZE, TICK_SECONDS } from './snake-game.constants';
+import { GameEvents } from '../../../core/engine/GameEvents';
 
 export class SnakeGameLogic implements IGame {
   private snake!: Snake;
   private food!: Food;
-  private score = 0;
   private elapsed = 0;
-  private gameOver = false;
+  private isGameOver = false;
 
   private currentGrid!: GridSize;
 
   constructor(
     private input: KeyboardInput,
     private readonly ctx: CanvasRenderingContext2D,
-    private readonly notifyScore: (score: number) => void,
-    private readonly notifyGameOver: (gameOver: boolean) => void
+    private events: GameEvents
   ) {
     this.reset();
   }
 
-  start(): void {
-    this.updateScore();
-    this.updateGameOver();
-  }
+  start(): void { }
 
   update(delta: number): void {
-    if (this.gameOver) {
+    if (this.isGameOver) {
       return;
     }
 
@@ -52,14 +48,13 @@ export class SnakeGameLogic implements IGame {
     this.snake.move(grows);
 
     if (this.snake.hasHitWall(this.currentGrid) || this.snake.hasHitSelf()) {
-      this.gameOver = true;
-      this.updateGameOver();
+      this.isGameOver = true;
+      this.events.onGameOver();
       return;
     }
 
     if (grows) {
-      this.score += 1;
-      this.updateScore();
+      this.events.onScore(1);
       this.food.respawn(this.currentGrid, this.snake.body);
     }
   }
@@ -71,8 +66,8 @@ export class SnakeGameLogic implements IGame {
     this.food.render(this.ctx, grid);
     this.snake.render(this.ctx, grid);
 
-    if (this.gameOver) {
-      drawGameOver(this.ctx, 'The snake crashed.');
+    if (this.isGameOver) {
+      drawGameOver(this.ctx, 'The snake crashed.'); //todo make it a component!
     }
   }
 
@@ -86,8 +81,6 @@ export class SnakeGameLogic implements IGame {
     );
     this.food = new Food();
     this.food.respawn(grid, this.snake.body);
-    this.updateScore();
-    this.updateGameOver();
   }
 
   private readDirection(): Vector2 | undefined {
@@ -135,14 +128,6 @@ export class SnakeGameLogic implements IGame {
       this.ctx.lineTo(this.ctx.canvas.width, canvasY);
       this.ctx.stroke();
     }
-  }
-
-  private updateScore(): void {
-    this.notifyScore(this.score);
-  }
-
-  private updateGameOver(): void {
-    this.notifyGameOver(this.gameOver);
   }
 
   private get grid(): GridSize {
