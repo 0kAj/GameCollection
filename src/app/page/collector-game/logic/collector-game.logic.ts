@@ -6,10 +6,11 @@ import { Player } from '../objects/player';
 import { Size } from '../../../core/models/size';
 import { Rect2 } from '../../../core/models/rect2';
 import { Vector2 } from '../../../core/models/vector2';
+import { COLLECTIBLES_COUNT } from './collector-game.constants';
 
 export class CollectorGameLogic implements IGame {
   private readonly player;
-  private readonly collectible = new Collectible();
+  private readonly collectibles: Collectible[] = [];
   private score = 0;
   private gameOver = false;
 
@@ -21,7 +22,12 @@ export class CollectorGameLogic implements IGame {
   ) {
     this.player = new Player(new Vector2(280, 220), this.input, () => this.board);
 
-    this.respawnCollectible();
+    // setup collectibles
+    for (let i = 0; i < COLLECTIBLES_COUNT; i++) {
+      this.collectibles[i] = new Collectible();
+      this.respawnCollectible(this.collectibles[i]);
+    }
+
     this.updateScore();
     this.updateGameOver();
   }
@@ -37,16 +43,21 @@ export class CollectorGameLogic implements IGame {
     }
 
     this.player.update(delta);
-    this.collectible.update(delta);
 
-    if (this.hasCollected()) {
-      this.score += 1;
-      this.updateScore();
-      this.respawnCollectible();
-      return;
-    }
+    this.collectibles.forEach((c) => {
+      if (c.hasVanished) return;
 
-    if (this.collectible.hasVanished) {
+      c.update(delta);
+      if (this.hasCollected(c)) {
+        this.score++;
+        this.updateScore(); // todo MAKE IT A SEARVICE -> StatManager like
+        this.respawnCollectible(c);
+      }
+    });
+
+    const allVanished = this.collectibles.every((c) => c.hasVanished);
+
+    if (allVanished) {
       this.gameOver = true;
       this.updateGameOver();
     }
@@ -55,32 +66,26 @@ export class CollectorGameLogic implements IGame {
   render(): void {
     this.clearScreen();
     this.drawArena();
-    this.collectible.render(this.ctx);
+    this.collectibles.forEach((c) => c.render(this.ctx));
     this.player.render(this.ctx);
-    this.drawHud();
 
     if (this.gameOver) {
       drawGameOver(this.ctx, 'The apple vanished.');
     }
   }
 
-  private respawnCollectible(): void {
+  private respawnCollectible(collectible: Collectible): void {
     const board = this.board;
 
-    this.collectible.respawn(
+    collectible.respawn(
       board.width,
       board.height,
       new Rect2(this.player.position, this.player.width, this.player.height),
     );
   }
 
-  private hasCollected(): boolean {
-    const playerCenterX = this.player.position.x + this.player.width / 2;
-    const playerCenterY = this.player.position.y + this.player.height / 2;
-    const itemCenterX = this.collectible.position.x + this.collectible.width / 2;
-    const itemCenterY = this.collectible.position.y + this.collectible.height / 2;
-    const distance = Math.hypot(playerCenterX - itemCenterX, playerCenterY - itemCenterY);
-    return distance < (this.player.width + this.collectible.width) * 0.45;
+  private hasCollected(collectable: Collectible): boolean {
+    return this.player.rect.overlaps(collectable.rect);
   }
 
   private clearScreen(): void {
@@ -95,16 +100,6 @@ export class CollectorGameLogic implements IGame {
     this.ctx.strokeStyle = '#475569';
     this.ctx.lineWidth = 4;
     this.ctx.strokeRect(2, 2, board.width - 4, board.height - 4);
-  }
-
-  private drawHud(): void {
-    this.ctx.fillStyle = '#f8fafc';
-    this.ctx.font = '18px Inter, system-ui, sans-serif';
-    this.ctx.fillText(`Score: ${this.score}`, 20, 28);
-
-    this.ctx.fillStyle = '#94a3b8';
-    this.ctx.font = '14px Inter, system-ui, sans-serif';
-    this.ctx.fillText('WASD / arrow keys', 20, this.board.height - 16);
   }
 
   private updateScore(): void {

@@ -1,3 +1,4 @@
+import { Rect2 } from '../models/rect2';
 import { Vector2 } from '../models/vector2';
 import { drawLoadedImage } from '../rendering/draw-loaded-image';
 
@@ -15,5 +16,9 @@ export abstract class GameObject {
 
   protected renderSprite(ctx: CanvasRenderingContext2D): void {
     drawLoadedImage(ctx, this.sprite, this.position.x, this.position.y, this.width, this.height);
+  }
+
+  get rect(): Rect2 {
+    return new Rect2(this.position, this.width, this.height);
   }
 }
