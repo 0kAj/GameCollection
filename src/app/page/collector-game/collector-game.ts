@@ -1,3 +1,4 @@
+import { StatManager } from './../../shared/stat-manager';
 import { Component } from '@angular/core';
 import { CanvasGameComponent } from '../../core/engine/CanvasGameComponent';
 import { CollectorGameLogic } from './logic/collector-game.logic';
@@ -13,7 +14,7 @@ import { KeyboardInput } from '../../core/input/KeyboardInput';
 })
 export class CollectorGame extends CanvasGameComponent<CollectorGameLogic> {
 
-  constructor(engine: GameEngine, private input: KeyboardInput) {
+  constructor(engine: GameEngine, private input: KeyboardInput, public statManager: StatManager) {
     super(engine);
   }
 
@@ -26,8 +27,7 @@ export class CollectorGame extends CanvasGameComponent<CollectorGameLogic> {
     return new CollectorGameLogic(
       this.input,
       context,
-      notifyScore,
-      notifyGameOver
+      this.statManager
     );
   }
 }

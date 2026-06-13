@@ -7,18 +7,16 @@ import { Size } from '../../../core/models/size';
 import { Rect2 } from '../../../core/models/rect2';
 import { Vector2 } from '../../../core/models/vector2';
 import { COLLECTIBLES_COUNT } from './collector-game.constants';
+import { StatManager } from '../../../shared/stat-manager';
 
 export class CollectorGameLogic implements IGame {
   private readonly player;
   private readonly collectibles: Collectible[] = [];
-  private score = 0;
-  private gameOver = false;
 
   constructor(
     private input: KeyboardInput,
     private readonly ctx: CanvasRenderingContext2D,
-    private readonly notifyScore: (score: number) => void,
-    private readonly notifyGameOver: (gameOver: boolean) => void,
+    private readonly statManager: StatManager,
   ) {
     this.player = new Player(new Vector2(280, 220), this.input, () => this.board);
 
@@ -27,18 +25,14 @@ export class CollectorGameLogic implements IGame {
       this.collectibles[i] = new Collectible();
       this.respawnCollectible(this.collectibles[i]);
     }
-
-    this.updateScore();
-    this.updateGameOver();
   }
 
   start(): void {
-    this.updateScore();
-    this.updateGameOver();
+    this.statManager.updateGameOver(false);
   }
 
   update(delta: number): void {
-    if (this.gameOver) {
+    if (this.statManager.gameOver()) {
       return;
     }
 
@@ -49,8 +43,7 @@ export class CollectorGameLogic implements IGame {
 
       c.update(delta);
       if (this.hasCollected(c)) {
-        this.score++;
-        this.updateScore(); // todo MAKE IT A SEARVICE -> StatManager like
+        this.statManager.addScore(c.scoreValue);
         this.respawnCollectible(c);
       }
     });
@@ -58,8 +51,7 @@ export class CollectorGameLogic implements IGame {
     const allVanished = this.collectibles.every((c) => c.hasVanished);
 
     if (allVanished) {
-      this.gameOver = true;
-      this.updateGameOver();
+      this.statManager.updateGameOver(true);
     }
   }
 
@@ -69,7 +61,7 @@ export class CollectorGameLogic implements IGame {
     this.collectibles.forEach((c) => c.render(this.ctx));
     this.player.render(this.ctx);
 
-    if (this.gameOver) {
+    if (this.statManager.gameOver()) {
       drawGameOver(this.ctx, 'The apple vanished.');
     }
   }
@@ -100,14 +92,6 @@ export class CollectorGameLogic implements IGame {
     this.ctx.strokeStyle = '#475569';
     this.ctx.lineWidth = 4;
     this.ctx.strokeRect(2, 2, board.width - 4, board.height - 4);
-  }
-
-  private updateScore(): void {
-    this.notifyScore(this.score);
-  }
-
-  private updateGameOver(): void {
-    this.notifyGameOver(this.gameOver);
   }
 
   private get board(): Size {
