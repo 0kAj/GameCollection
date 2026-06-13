@@ -2,6 +2,8 @@
   <header class="collector-header">
     <h2>Collector</h2>
     <div class="collector-controls">
+      <span>Time: {{ statManager.elapsed() | number: '1.0-0' }}</span>
+      <span>Combo: {{ statManager.combo() }}</span>
       <span class="collector-score">Score: {{ statManager.score() }}</span>
       @if (statManager.gameOver()) {
         <span class="collector-score">Game over</span>

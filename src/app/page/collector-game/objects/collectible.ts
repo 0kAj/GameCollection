@@ -4,15 +4,21 @@ import { Rect2 } from '../../../core/models/rect2';
 import { Vector2 } from '../../../core/models/vector2';
 import {
   COLLECTIBLE_SPRITE_SRC,
-  ITEM_LIFETIME_SECONDS,
   ITEM_SIZE,
 } from '../logic/collector-game.constants';
+import { CollectibleConfig } from './collectible.conf';
 
 export class Collectible extends GameObject {
   private age = 0;
+  private readonly lifetime: number;
+  private readonly offset: number;
 
-  constructor(private readonly offset = ITEM_SIZE * 1.5) {
+  constructor(config: CollectibleConfig) {
     super(Vector2.ZERO, ITEM_SIZE, ITEM_SIZE, loadImage(COLLECTIBLE_SPRITE_SRC));
+
+    this.lifetime = config.lifetimeSeconds;
+    this.offset = config.offset ?? ITEM_SIZE * 1.5;
+
     this.respawn(0, 0, Rect2.ZERO);
   }
 
@@ -39,7 +45,7 @@ export class Collectible extends GameObject {
     const centerX = this.position.x + this.width / 2;
     const centerY = this.position.y + this.height / 2;
 
-    this.age = Math.min(this.age + delta, ITEM_LIFETIME_SECONDS);
+    this.age = Math.min(this.age + delta, this.lifetime);
     const scale = this.scaleFactor;
     this.width = ITEM_SIZE * scale;
     this.height = ITEM_SIZE * scale;
@@ -52,7 +58,7 @@ export class Collectible extends GameObject {
   }
 
   get hasVanished(): boolean {
-    return this.age >= ITEM_LIFETIME_SECONDS;
+    return this.age >= this.lifetime;
   }
 
   private isTooClose(avoid: Rect2): boolean {
@@ -62,7 +68,7 @@ export class Collectible extends GameObject {
   }
 
   get scaleFactor(): number {
-    return 1 - this.age / ITEM_LIFETIME_SECONDS;
+    return 1 - this.age / this.lifetime;
   }
 
   get scoreValue(): number {

@@ -11,7 +11,10 @@ export abstract class CanvasGameComponent<TGame extends IGame> implements AfterV
   private game?: TGame;
   private resizeObserver?: ResizeObserver;
 
-  constructor(private engine: GameEngine, protected statManager: StatManager) {}
+  constructor(
+    private engine: GameEngine,
+    protected statManager: StatManager,
+  ) {}
 
   ngAfterViewInit(): void {
     const canvas = this.canvasRef.nativeElement;
@@ -36,6 +39,7 @@ export abstract class CanvasGameComponent<TGame extends IGame> implements AfterV
     this.game = this.createGame(context, {
       onScore: (v) => this.statManager.addScore(v),
       onGameOver: () => this.statManager.updateGameOver(true),
+      onStats: (stats) => this.statManager.updateStats(stats),
     });
     this.engine?.load(this.game);
     this.engine?.start();

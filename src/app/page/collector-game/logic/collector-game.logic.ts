@@ -6,7 +6,7 @@ import { Player } from '../objects/player';
 import { Size } from '../../../core/models/size';
 import { Rect2 } from '../../../core/models/rect2';
 import { Vector2 } from '../../../core/models/vector2';
-import { COLLECTIBLES_COUNT } from './collector-game.constants';
+import { SPAWN_INTERVALL } from './collector-game.constants';
 import { GameEvents } from '../../../core/engine/GameEvents';
 
 export class CollectorGameLogic implements IGame {
@@ -15,44 +15,78 @@ export class CollectorGameLogic implements IGame {
 
   private isGameOver = false;
 
+  private spawnTimer = 0;
+  private elapsed = 0;
+  private combo = 0;
+  private lastHitTime = 0;
+
   constructor(
     private input: KeyboardInput,
     private readonly ctx: CanvasRenderingContext2D,
-    private readonly events: GameEvents
+    private readonly events: GameEvents,
   ) {
     this.player = new Player(new Vector2(280, 220), this.input, () => this.board);
 
-    // setup collectibles
-    for (let i = 0; i < COLLECTIBLES_COUNT; i++) {
-      this.collectibles[i] = new Collectible();
-      this.respawnCollectible(this.collectibles[i]);
-    }
+    // setup first collectibles
+    this.createCollectable();
   }
 
-  start(): void { }
+  start(): void {}
 
   update(delta: number): void {
-    if (this.isGameOver) {
-      return;
+    if (this.isGameOver) return;
+
+    this.elapsed += delta;
+    this.spawnTimer += delta;
+
+    if (this.collectibles.length < this.maxCollectibles) {
+      if (this.spawnTimer >= this.dynamicSpawnInterval) {
+        this.spawnTimer = 0;
+
+        this.createCollectable();
+      }
     }
 
     this.player.update(delta);
 
-    this.collectibles.forEach((c) => {
-      if (c.hasVanished) return;
+    this.checkComboTimeout();
 
+    this.collectibles.forEach((c) => {
       c.update(delta);
+
+      if (c.hasVanished) {
+        this.respawnCollectible(c);
+        return;
+      }
+
       if (this.hasCollected(c)) {
-        this.events.onScore(c.scoreValue);
+        this.combo++;
+        this.lastHitTime = this.elapsed;
+        this.events.onScore(c.scoreValue * this.combo);
         this.respawnCollectible(c);
       }
     });
 
-    const allVanished = this.collectibles.every((c) => c.hasVanished);
-
-    if (allVanished) {
+    if (this.elapsed > 90) {
       this.isGameOver = true;
       this.events.onGameOver();
+    }
+
+    this.events.onStats?.({
+      elapsed: this.elapsed,
+      combo: this.combo,
+    });
+  }
+
+  private createCollectable() {
+    const c = new Collectible({ lifetimeSeconds: this.dynamicLivetime });
+    this.collectibles.push(c);
+    this.respawnCollectible(c);
+  }
+
+  private checkComboTimeout(): void {
+    if (this.combo > 0 && this.elapsed - this.lastHitTime > 3) {
+      this.combo = 0;
     }
   }
 
@@ -100,5 +134,17 @@ export class CollectorGameLogic implements IGame {
       width: this.ctx.canvas.width,
       height: this.ctx.canvas.height,
     };
+  }
+
+  private get dynamicSpawnInterval() {
+    return Math.max(0.4, SPAWN_INTERVALL - this.elapsed * 0.01);
+  }
+
+  private get dynamicLivetime() {
+    return Math.max(1.5, 5 - this.elapsed * 0.05);
+  }
+
+  private get maxCollectibles() {
+    return 3 + Math.floor(this.elapsed / 10);
   }
 }
