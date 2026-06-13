@@ -13,7 +13,7 @@ export class Collectible extends GameObject {
 
   constructor(private readonly offset = ITEM_SIZE * 1.5) {
     super(Vector2.ZERO, ITEM_SIZE, ITEM_SIZE, loadImage(COLLECTIBLE_SPRITE_SRC));
-    this.respawn(0, 0, new Rect2(Vector2.ZERO, 0, 0));
+    this.respawn(0, 0, Rect2.ZERO);
   }
 
   respawn(width: number, height: number, avoid: Rect2): void {

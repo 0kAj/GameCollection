@@ -11,6 +11,10 @@ export class Rect2 extends Size {
     super(width, height);
   }
 
+  static get ZERO() {
+    return new Rect2(Vector2.ZERO, 0, 0);
+  }
+
   contains(point: Vector2): boolean {
     return (
       point.x >= this.position.x &&
