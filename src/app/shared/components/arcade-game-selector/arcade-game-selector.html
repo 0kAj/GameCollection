@@ -1,0 +1,12 @@
+<div class="arcade-machine shadow-lg">
+  <h3 class="arcade-label">SELECT GAME</h3>
+
+  <div class="game-grid">
+    @for (game of games; track $index) {
+      <div class="game-card" (click)="selectGame.emit(game)">
+        <img [src]="game.image" />
+        <div class="game-title">{{ game.name }}</div>
+      </div>
+    }
+  </div>
+</div>

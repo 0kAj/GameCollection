@@ -6,7 +6,7 @@ import { GameEngine } from '../../core/engine/GameEngine';
 import { KeyboardInput } from '../../core/input/KeyboardInput';
 import { StatManager } from '../../shared/stat-manager';
 import { GameEvents } from '../../core/engine/GameEvents';
-import { GameOverScreen } from "../../shared/components/game-over-screen/game-over-screen/game-over-screen";
+import { GameOverScreen } from "../../shared/components/game-over-screen/game-over-screen";
 
 @Component({
   standalone: true,

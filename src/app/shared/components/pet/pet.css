@@ -1,0 +1,42 @@
+.pet {
+  position: absolute;
+  bottom: 0px;
+  left: 50px;
+
+  width: 80px;
+  height: 80px;
+
+  animation: walk 30s infinite linear;
+}
+
+@keyframes walk {
+  0% {
+    transform: translateX(-120px);
+  }
+
+  25% {
+    transform: translateX(25vw);
+  }
+
+  50% {
+    transform: translateX(50vw);
+  }
+
+  75% {
+    transform: translateX(75vw);
+  }
+
+  100% {
+    transform: translateX(110vw);
+  }
+}
+
+/* Bild füllt komplett den Container */
+.pet img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+
+  pointer-events: none;
+}

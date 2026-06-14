@@ -1,0 +1,16 @@
+<div class="home-screen">
+  <!-- Animated Arcade Title -->
+  <app-arcade-title />
+
+  <!-- Arcade Machine (Game Selection) -->
+  <!-- <app-arcade-game-selector (selectGame)="openGame($event)" /> -->
+  <app-arcade-game-selector/>
+
+  <!-- Floating Pet -->
+  <app-pet (openUI)="togglePetUI()" />
+
+  <!-- Pet UI Overlay -->
+  @if (petOpen) {
+    <app-pet-ui (close)="petOpen = false" />
+  }
+</div>

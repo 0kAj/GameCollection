@@ -1,0 +1,55 @@
+.arcade-machine {
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 700px;
+  padding: 20px;
+
+  background: #1b1b1b;
+  border: 6px solid #ffcc00;
+  border-radius: 20px;
+
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+}
+
+.arcade-label {
+  text-align: center;
+  color: #ffcc00;
+  font-weight: bold;
+  letter-spacing: 4px;
+  margin-bottom: 15px;
+  animation: flicker 1.5s infinite alternate;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.game-card {
+  background: #2b2b2b;
+  border: 2px solid #ffcc00;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+
+  transition: transform 0.2s ease;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+.game-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.game-title {
+  color: white;
+  text-align: center;
+  margin-top: 5px;
+}

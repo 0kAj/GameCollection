@@ -9,3 +9,34 @@ Ambesten soll das auswahl menü in einem Arcade artigen stil gehalten sein. Also
 der hintergrund soll ein Wohnzimmer sein in einem Orangenen ton.
 
 Bootstrap mit Tailwind?
+
+
+
+## HomePage (Container Scene)
+- Background
+- Layout
+- Router Navigation
+## ArcadeGameSelectorComponent
+- Grid / Arcade Maschine UI
+- Game Cards
+## PetComponent
+- Canvas oder Sprite
+- Click → opens Pet UI
+## PetOverlayComponent
+- Farbe ändern
+- Feed Button
+- simple state UI
+
+## Structure
+```text
+src/app/page/home/
+  home.page.ts
+  home.page.html
+  home.page.css
+
+  components/
+    arcade-selector/
+    pet/
+    pet-ui/
+    arcade-title/
+```

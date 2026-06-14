@@ -1,0 +1,18 @@
+.arcade-title {
+  text-align: center;
+  font-size: 48px;
+  margin-top: 20px;
+
+  color: #fff;
+  text-shadow:
+    0 0 5px #ff0,
+    0 0 10px #f0f,
+    0 0 20px #0ff;
+
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
