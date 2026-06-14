@@ -5,7 +5,7 @@ import { CollectorGameLogic } from './logic/collector-game.logic';
 import { GameEngine } from '../../core/engine/GameEngine';
 import { KeyboardInput } from '../../core/input/KeyboardInput';
 import { GameEvents } from '../../core/engine/GameEvents';
-import { TimeFormatPipe } from '../../../pipes/time-format-pipe';
+import { TimeFormatPipe } from '../../shared/pipes/time-format-pipe';
 
 @Component({
   standalone: true,
