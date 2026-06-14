@@ -1,13 +1,24 @@
-<div class="gameover-overlay d-flex justify-content-center align-items-center">
+<div
+  class="gameover-overlay d-flex justify-content-center align-items-center user-select-none"
+  [class.show]="show"
+>
   <div class="card text-center shadow-lg gameover-card">
-    <div class="card-body">
+    <div class="card-body p-4">
       <h1 class="mb-3">Game Over</h1>
 
-      <p class="mb-4">Final Score: {{ score }}</p>
+      <p class="mb-4 fs-5">
+        Final Score: <strong>{{ score }}</strong>
+      </p>
 
-      <button class="btn btn-primary" (click)="restart.emit()">
-        Play Again
-      </button>
+      <div class="d-grid gap-3">
+        <button class="btn btn-primary btn-lg fw-semibold shadow-sm" (click)="restart.emit()">
+          ▶ Play Again
+        </button>
+
+        <button class="btn btn-outline-secondary btn-lg fw-semibold" (click)="back.emit()">
+          ← Back
+        </button>
+      </div>
     </div>
   </div>
 </div>

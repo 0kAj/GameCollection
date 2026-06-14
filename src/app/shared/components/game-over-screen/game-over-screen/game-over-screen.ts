@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-game-over-screen',
@@ -8,5 +8,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class GameOverScreen {
   @Input() score: number = 0;
+  @Input() show: boolean = true;
   @Output() restart = new EventEmitter();
+  @Output() back = new EventEmitter();
+
+  @HostListener('document:keydown.enter')
+  onEnter() {
+    this.restart.emit();
+  }
 }
