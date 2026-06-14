@@ -6,7 +6,7 @@ import { Player } from '../objects/player';
 import { Size } from '../../../core/models/size';
 import { Rect2 } from '../../../core/models/rect2';
 import { Vector2 } from '../../../core/models/vector2';
-import { SPAWN_INTERVALL } from './collector-game.constants';
+import { GAME_DURATION_SECONDS, SPAWN_INTERVALL } from './collector-game.constants';
 import { GameEvents } from '../../../core/engine/GameEvents';
 
 export class CollectorGameLogic implements IGame {
@@ -67,13 +67,13 @@ export class CollectorGameLogic implements IGame {
       }
     });
 
-    if (this.elapsed > 90) {
+    if (this.elapsed > GAME_DURATION_SECONDS) {
       this.isGameOver = true;
       this.events.onGameOver();
     }
 
     this.events.onStats?.({
-      elapsed: this.elapsed,
+      timeleft: Math.max(0, GAME_DURATION_SECONDS - this.elapsed),
       combo: this.combo,
     });
   }

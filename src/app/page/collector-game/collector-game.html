@@ -2,7 +2,9 @@
   <header class="collector-header">
     <h2>Collector</h2>
     <div class="collector-controls">
-      <span>Time: {{ statManager.elapsed() | timeFormat: false }}</span>
+      <span [class.warning]="statManager.timeleft() <= 85">
+        Time left: {{ statManager.timeleft() | timeFormat: false }}
+      </span>
       <span>Combo: {{ statManager.combo() }}</span>
       <span class="collector-score">Score: {{ statManager.score() }}</span>
       @if (statManager.gameOver()) {

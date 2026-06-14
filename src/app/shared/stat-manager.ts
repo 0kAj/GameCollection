@@ -8,11 +8,11 @@ export class StatManager {
 
   gameOver = signal(false);
 
-  elapsed = signal(0);
+  timeleft = signal(0);
   combo = signal(0);
 
-  updateStats(stats: { elapsed: number; combo: number }): void {
-    this.elapsed.set(stats.elapsed);
+  updateStats(stats: { timeleft: number; combo: number }): void {
+    this.timeleft.set(stats.timeleft);
     this.combo.set(stats.combo);
   }
 
