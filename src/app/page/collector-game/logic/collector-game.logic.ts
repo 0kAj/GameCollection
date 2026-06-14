@@ -1,4 +1,3 @@
-import { drawGameOver } from '../../../core/rendering/draw-game-over';
 import { IGame } from '../../../core/engine/IGame';
 import { KeyboardInput } from '../../../core/input/KeyboardInput';
 import { Collectible } from '../objects/collectible';
@@ -95,10 +94,6 @@ export class CollectorGameLogic implements IGame {
     this.drawArena();
     this.collectibles.forEach((c) => c.render(this.ctx));
     this.player.render(this.ctx);
-
-    if (this.isGameOver) {
-      drawGameOver(this.ctx, 'The apple vanished.'); //todo make it a component!!!
-    }
   }
 
   private respawnCollectible(collectible: Collectible): void {

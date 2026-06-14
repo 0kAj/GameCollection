@@ -1,4 +1,3 @@
-import { drawGameOver } from '../../../core/rendering/draw-game-over';
 import { IGame } from '../../../core/engine/IGame';
 import { KeyboardInput } from '../../../core/input/KeyboardInput';
 import { GridSize } from '../models/grid-size';
@@ -65,10 +64,6 @@ export class SnakeGameLogic implements IGame {
     this.drawGrid(grid);
     this.food.render(this.ctx, grid);
     this.snake.render(this.ctx, grid);
-
-    if (this.isGameOver) {
-      drawGameOver(this.ctx, 'The snake crashed.'); //todo make it a component!
-    }
   }
 
   private reset(): void {

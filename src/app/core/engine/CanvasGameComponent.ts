@@ -36,6 +36,8 @@ export abstract class CanvasGameComponent<TGame extends IGame> implements AfterV
       return;
     }
 
+    this.statManager.updateGameOver(false);
+
     this.game = this.createGame(context, {
       onScore: (v) => this.statManager.addScore(v),
       onGameOver: () => this.statManager.updateGameOver(true),

@@ -1,4 +1,4 @@
-<section class="collector-shell">
+<section class="collector-shell position-relative">
   <header class="collector-header">
     <h2>Collector</h2>
     <div class="collector-controls">
@@ -17,6 +17,8 @@
       <button type="button" (click)="restart()">Restart</button>
     </div>
   </header>
-
   <canvas #canvas></canvas>
+  @if (statManager.gameOver()) {
+    <app-game-over-screen [score]="statManager.score()" (restart)="restart()" />
+  }
 </section>

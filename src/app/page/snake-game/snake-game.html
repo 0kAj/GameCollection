@@ -11,4 +11,7 @@
   </header>
 
   <canvas #canvas></canvas>
+  @if (statManager.gameOver()) {
+    <app-game-over-screen [score]="statManager.score()" (restart)="restart()" />
+  }
 </section>
