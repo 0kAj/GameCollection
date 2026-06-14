@@ -2,7 +2,11 @@
   <header class="collector-header">
     <h2>Collector</h2>
     <div class="collector-controls">
-      <span [class.warning]="statManager.timeleft() <= 85">
+      <span
+        [class.text-warning]="statManager.timeleft() <= 30 && statManager.timeleft() > 10"
+        [class.text-danger]="statManager.timeleft() <= 10"
+        [class.fw-bold]="statManager.timeleft() <= 10"
+      >
         Time left: {{ statManager.timeleft() | timeFormat: false }}
       </span>
       <span>Combo: {{ statManager.combo() }}</span>
