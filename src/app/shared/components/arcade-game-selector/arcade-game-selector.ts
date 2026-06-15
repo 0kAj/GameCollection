@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { IGame } from '../../../core/engine/IGame';
+import { ArcadeGame } from './models/ArcadeGame';
 
 @Component({
   selector: 'app-arcade-game-selector',
@@ -8,11 +9,12 @@ import { IGame } from '../../../core/engine/IGame';
   styleUrl: './arcade-game-selector.css',
 })
 export class ArcadeGameSelector {
-  @Output() selectGame = new EventEmitter<object>();
+  @Output() selectGame = new EventEmitter<ArcadeGame>();
 
   //todo ArcadeGame class
-  games = [{
-    name: 'Collector',
-    image: 'assets/games/FoodCollector.png'
-  }]
+
+  public games = [ //todo extract it to external const
+    new ArcadeGame('Collector', 'assets/games/FoodCollector.png', 'collector'),
+    new ArcadeGame('Snake', 'assets/games/FoodCollector.png', 'snake'), //todo change img
+  ]
 }

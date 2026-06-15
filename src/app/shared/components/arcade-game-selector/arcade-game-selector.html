@@ -4,7 +4,7 @@
   <div class="game-grid">
     @for (game of games; track $index) {
       <div class="game-card" (click)="selectGame.emit(game)">
-        <img [src]="game.image" />
+        <img [src]="game.imageSrc" />
         <div class="game-title">{{ game.name }}</div>
       </div>
     }
