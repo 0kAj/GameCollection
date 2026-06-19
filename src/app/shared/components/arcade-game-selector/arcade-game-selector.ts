@@ -15,6 +15,6 @@ export class ArcadeGameSelector {
 
   public games = [ //todo extract it to external const
     new ArcadeGame('Collector', 'assets/games/FoodCollector.png', 'collector'),
-    new ArcadeGame('Snake', 'assets/games/FoodCollector.png', 'snake'), //todo change img
+    new ArcadeGame('Snake', 'assets/games/Snake.png', 'snake'), //todo change img
   ]
 }

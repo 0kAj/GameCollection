@@ -61,19 +61,3 @@ canvas {
   background: #0f172a;
   display: block;
 }
-
-@media (max-width: 520px) {
-  .collector-header {
-    align-items: flex-start;
-  }
-
-  .collector-header h2 {
-    font-size: 1rem;
-  }
-
-  .collector-score,
-  button {
-    min-height: 2rem;
-    font-size: 0.85rem;
-  }
-}

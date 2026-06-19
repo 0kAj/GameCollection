@@ -7,11 +7,12 @@ import { KeyboardInput } from '../../core/input/KeyboardInput';
 import { StatManager } from '../../shared/stat-manager';
 import { GameEvents } from '../../core/engine/GameEvents';
 import { GameOverScreen } from "../../shared/components/game-over-screen/game-over-screen";
+import { ScoreBoard } from "../../shared/components/score-board/score-board";
 
 @Component({
   standalone: true,
   selector: 'app-snake-game',
-  imports: [CommonModule, GameOverScreen],
+  imports: [CommonModule, GameOverScreen, ScoreBoard],
   templateUrl: './snake-game.html',
   styleUrls: ['./snake-game.css'],
 })

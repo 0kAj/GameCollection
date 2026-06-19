@@ -1,17 +1,15 @@
-<section class="snake-shell">
-  <header class="snake-header">
-    <h2>Snake</h2>
-    <div class="snake-controls">
-      <span class="snake-score">Score: {{ statManager.score() }}</span>
-      @if (statManager.gameOver()) {
-        <span class="snake-score">Game over</span>
-      }
-      <button type="button" (click)="restart()">Restart</button>
-    </div>
-  </header>
+<app-score-board />
 
-  <canvas #canvas></canvas>
-  @if (statManager.gameOver()) {
-    <app-game-over-screen [show]="statManager.gameOver()" [score]="statManager.score()" (restart)="restart()" />
-  }
-</section>
+<header class="snake-header user-select-none">
+  <h2>Snake</h2>
+  <div class="snake-center">
+    <button class="btn btn-primary" (click)="restart()">Restart</button>
+  </div>
+</header>
+
+<canvas #canvas></canvas>
+<app-game-over-screen
+  [show]="statManager.gameOver()"
+  [score]="statManager.score()"
+  (restart)="restart()"
+/>
