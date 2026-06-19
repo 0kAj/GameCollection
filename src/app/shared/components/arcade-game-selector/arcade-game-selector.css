@@ -11,7 +11,7 @@
   border: 6px solid #ffcc00;
   border-radius: 20px;
 
-  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
 }
 
 .arcade-label {
@@ -21,6 +21,27 @@
   letter-spacing: 4px;
   margin-bottom: 15px;
   animation: flicker 1.5s infinite alternate;
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 10px #ffcc00;
+  }
+  45% {
+    opacity: 0.4;
+    text-shadow: none;
+  }
+  50% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0.2;
+  }
+  55% {
+    opacity: 1;
+  }
 }
 
 .game-grid {

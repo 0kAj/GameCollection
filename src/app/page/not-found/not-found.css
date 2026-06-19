@@ -1,0 +1,44 @@
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+}
+
+h1 {
+  font-size: 6rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #ffcc00;
+  text-shadow: 0 0 10px #ffcc00;
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 10px #ffcc00;
+  }
+  45% {
+    opacity: 0.4;
+    text-shadow: none;
+  }
+  50% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0.2;
+  }
+  55% {
+    opacity: 1;
+  }
+}
+
+.error-container p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #ffcc00;
+  animation: flicker 1.2s infinite alternate;
+}
