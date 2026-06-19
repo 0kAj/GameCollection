@@ -1,8 +1,8 @@
-<section class="collector-shell position-relative">
-  <header class="collector-header">
-    <h2>Collector</h2>
-    <app-score-board />
+<app-score-board />
 
+<header class="collector-header user-select-none">
+  <h2 class="header">Collector</h2>
+  <div class="collector-center">
     <div class="collector-controls">
       <span
         [class.text-warning]="statManager.timeleft() <= 30 && statManager.timeleft() > 10"
@@ -11,18 +11,25 @@
       >
         Time left: {{ statManager.timeleft() | timeFormat: false }}
       </span>
-      <span>Combo: {{ statManager.combo() }}</span>
-      <span class="collector-score">Score: {{ statManager.score() }}</span>
+
+      <span
+        [class.text-success]="statManager.combo() >= 10"
+        [class.text-warning]="statManager.combo() >= 1 && statManager.combo() < 10"
+        [class.fw-bold]="statManager.combo() >= 5"
+        >Combo: {{ statManager.combo() }}</span
+      >
+
       @if (statManager.gameOver()) {
         <span class="collector-score">Game over</span>
       }
     </div>
-    <button type="button" (click)="restart()">Restart</button>
-  </header>
-  <canvas #canvas></canvas>
-  <app-game-over-screen
-    [show]="statManager.gameOver()"
-    [score]="statManager.score()"
-    (restart)="restart()"
-  />
-</section>
+
+    <button class="btn btn-primary" (click)="restart()">Restart</button>
+  </div>
+</header>
+<canvas #canvas></canvas>
+<app-game-over-screen
+  [show]="statManager.gameOver()"
+  [score]="statManager.score()"
+  (restart)="restart()"
+/>
