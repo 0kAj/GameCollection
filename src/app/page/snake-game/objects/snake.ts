@@ -1,17 +1,18 @@
 import { loadImage } from '../../../core/assets/image-loader';
+import { GameObject } from '../../../core/engine/GameObject';
 import { SNAKE_BODY_SPRITE_SRC, SNAKE_HEAD_SPRITE_SRC } from '../logic/snake-game.constants';
 import { GridSize } from '../models/grid-size';
 import { Vector2 } from '../../../core/models/vector2';
-import { drawGridSprite } from '../utils/draw-grid-sprite';
 
-export class Snake {
-  private readonly headSprite = loadImage(SNAKE_HEAD_SPRITE_SRC);
-  private readonly bodySprite = loadImage(SNAKE_BODY_SPRITE_SRC);
+export class Snake extends GameObject {
   private direction: Vector2 = Vector2.RIGHT;
   private pendingDirection: Vector2 = Vector2.RIGHT;
   private segments: Vector2[];
+  private readonly bodySprite = loadImage(SNAKE_BODY_SPRITE_SRC);
+  private gridSize: GridSize | null = null;
 
   constructor(start: Vector2) {
+    super(Vector2.ZERO, 0, 0, loadImage(SNAKE_HEAD_SPRITE_SRC));
     this.segments = [
       new Vector2(start.x, start.y),
       new Vector2(start.x - 1, start.y),
@@ -34,6 +35,8 @@ export class Snake {
     if (!grow) {
       this.segments.pop();
     }
+
+    this.updatePixelPosition();
   }
 
   willEat(food: Vector2): boolean {
@@ -50,11 +53,35 @@ export class Snake {
     return this.segments.slice(1).some((segment) => segment.sameVector(head));
   }
 
-  render(ctx: CanvasRenderingContext2D, grid: GridSize): void {
+  override update(delta: number): void {
+    // Movement is handled by move() method in game logic
+  }
+
+  override render(ctx: CanvasRenderingContext2D): void {
+    if (!this.gridSize) return;
+
     this.segments.forEach((segment, index) => {
-      const sprite = index === 0 ? this.headSprite : this.bodySprite;
-      drawGridSprite(ctx, sprite, segment, grid);
+      const sprite = index === 0 ? this.sprite : this.bodySprite;
+      const pixelX = segment.x * this.gridSize!.cellWidth;
+      const pixelY = segment.y * this.gridSize!.cellHeight;
+
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(sprite, pixelX, pixelY, this.gridSize!.cellWidth, this.gridSize!.cellHeight);
     });
+  }
+
+  setGridSize(grid: GridSize): void {
+    this.gridSize = grid;
+    this.updatePixelPosition();
+  }
+
+  private updatePixelPosition(): void {
+    if (!this.gridSize) return;
+
+    this.position.x = this.head.x * this.gridSize.cellWidth;
+    this.position.y = this.head.y * this.gridSize.cellHeight;
+    this.width = this.gridSize.cellWidth;
+    this.height = this.gridSize.cellHeight;
   }
 
   get body(): Vector2[] {

@@ -31,6 +31,7 @@ export class SnakeGameLogic implements IGame {
     }
 
     this.currentGrid = this.grid;
+    this.snake.setGridSize(this.currentGrid);
 
     const requestedDirection = this.readDirection();
     if (requestedDirection) {
@@ -43,7 +44,7 @@ export class SnakeGameLogic implements IGame {
     }
 
     this.elapsed = 0;
-    const grows = this.snake.willEat(this.food.position);
+    const grows = this.snake.willEat(this.food.gridPos);
     this.snake.move(grows);
 
     if (this.snake.hasHitWall(this.currentGrid) || this.snake.hasHitSelf()) {
@@ -55,6 +56,7 @@ export class SnakeGameLogic implements IGame {
     if (grows) {
       this.events.onScore(1);
       this.food.respawn(this.currentGrid, this.snake.body);
+      this.food.updatePixelPosition(this.currentGrid);
     }
   }
 
@@ -62,8 +64,8 @@ export class SnakeGameLogic implements IGame {
     const grid = this.grid;
     this.clearScreen();
     this.drawGrid(grid);
-    this.food.render(this.ctx, grid);
-    this.snake.render(this.ctx, grid);
+    this.food.render(this.ctx);
+    this.snake.render(this.ctx);
   }
 
   private reset(): void {
@@ -74,8 +76,10 @@ export class SnakeGameLogic implements IGame {
         Math.floor(grid.rows / 2)
       )
     );
+    this.snake.setGridSize(grid);
     this.food = new Food();
     this.food.respawn(grid, this.snake.body);
+    this.food.updatePixelPosition(grid);
   }
 
   private readDirection(): Vector2 | undefined {
