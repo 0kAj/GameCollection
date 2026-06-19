@@ -1,0 +1,32 @@
+.score-board {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 0px;
+
+  padding: 8px 12px;
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+}
+
+.score-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.score-value {
+  min-width: 30px;
+  text-align: right;
+}

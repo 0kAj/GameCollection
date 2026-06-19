@@ -31,23 +31,22 @@
 .collector-controls {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 0.5rem;
   flex-wrap: wrap;
   pointer-events: auto;
-}
 
-.collector-score {
   min-height: 2.25rem;
-  display: inline-flex;
-  align-items: center;
   padding: 0 0.8rem;
+
   border: 1px solid rgba(226, 232, 240, 0.2);
   border-radius: 0.5rem;
   background: rgba(15, 23, 42, 0.72);
+
   color: #f8fafc;
   font-size: 0.95rem;
   font-weight: 600;
+
   backdrop-filter: blur(8px);
 }
 

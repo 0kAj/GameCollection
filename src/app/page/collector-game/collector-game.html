@@ -1,6 +1,8 @@
 <section class="collector-shell position-relative">
   <header class="collector-header">
     <h2>Collector</h2>
+    <app-score-board />
+
     <div class="collector-controls">
       <span
         [class.text-warning]="statManager.timeleft() <= 30 && statManager.timeleft() > 10"
@@ -14,9 +16,13 @@
       @if (statManager.gameOver()) {
         <span class="collector-score">Game over</span>
       }
-      <button type="button" (click)="restart()">Restart</button>
     </div>
+    <button type="button" (click)="restart()">Restart</button>
   </header>
   <canvas #canvas></canvas>
-  <app-game-over-screen [show]="statManager.gameOver()" [score]="statManager.score()" (restart)="restart()" />
+  <app-game-over-screen
+    [show]="statManager.gameOver()"
+    [score]="statManager.score()"
+    (restart)="restart()"
+  />
 </section>
