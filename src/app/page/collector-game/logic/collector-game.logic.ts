@@ -91,7 +91,6 @@ export class CollectorGameLogic implements IGame {
 
   render(): void {
     this.clearScreen();
-    this.drawArena();
     this.collectibles.forEach((c) => c.render(this.ctx));
     this.player.render(this.ctx);
   }
@@ -113,15 +112,6 @@ export class CollectorGameLogic implements IGame {
   private clearScreen(): void {
     this.ctx.fillStyle = '#0f172a';
     this.ctx.fillRect(0, 0, this.board.width, this.board.height);
-  }
-
-  private drawArena(): void {
-    const board = this.board;
-
-    this.ctx.imageSmoothingEnabled = false;
-    this.ctx.strokeStyle = '#475569';
-    this.ctx.lineWidth = 4;
-    this.ctx.strokeRect(2, 2, board.width - 4, board.height - 4);
   }
 
   private get board(): Size {
