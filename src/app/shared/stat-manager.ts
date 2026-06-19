@@ -20,6 +20,13 @@ export class StatManager {
     this.score.update((currentScore) => currentScore + scoreToAdd);
   }
 
+  eatScore(amount: number): void {
+    const currentScore = this.score();
+    const eatenScore: number = Math.min(amount, currentScore);
+
+    this.score.set(currentScore - eatenScore);
+  }
+
   updateGameOver(gameOver: boolean): void {
     this.gameOver.set(gameOver);
   }

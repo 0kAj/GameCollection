@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ArcadeTitle } from '../../../shared/components/arcade-title/arcade-title';
 import { Pet } from '../../../shared/components/pet/pet';
 import { PetUi } from '../../../shared/components/pet-ui/pet-ui';
@@ -9,17 +9,17 @@ import { ScoreBoard } from "../../../shared/components/score-board/score-board";
 
 @Component({
   selector: 'app-home-page',
-  imports: [ArcadeTitle, Pet, PetUi, ArcadeGameSelector, ScoreBoard],
+  imports: [ArcadeTitle, Pet, ArcadeGameSelector, ScoreBoard, PetUi],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
 export class HomePage {
-  petOpen = false;
+  petUIOpen = signal(false);
 
   constructor(private router: Router) {}
 
   togglePetUI() {
-    this.petOpen = !this.petOpen;
+    this.petUIOpen.update(v => !v);
   }
 
   openGame(game: ArcadeGame) {
