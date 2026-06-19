@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { ArcadeTitle } from '../../../shared/components/arcade-title/arcade-title';
-import { Pet } from '../../../shared/components/pet/pet';
-import { PetUi } from '../../../shared/components/pet-ui/pet-ui';
-import { ArcadeGameSelector } from '../../../shared/components/arcade-game-selector/arcade-game-selector';
-import { ArcadeGame } from '../../../shared/components/arcade-game-selector/models/ArcadeGame';
+import { ArcadeTitle } from '../../shared/components/arcade-title/arcade-title';
+import { Pet } from '../../shared/components/pet/pet';
+import { PetUi } from '../../shared/components/pet-ui/pet-ui';
+import { ArcadeGameSelector } from '../../shared/components/arcade-game-selector/arcade-game-selector';
+import { ArcadeGame } from '../../shared/components/arcade-game-selector/models/ArcadeGame';
 import { Router } from '@angular/router';
-import { ScoreBoard } from "../../../shared/components/score-board/score-board";
+import { ScoreBoard } from "../../shared/components/score-board/score-board";
 
 @Component({
   selector: 'app-home-page',
