@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { IGame } from '../../../core/engine/IGame';
 import { ArcadeGame } from './models/ArcadeGame';
+import { ArcadeTitle } from "../arcade-title/arcade-title";
 
 @Component({
   selector: 'app-arcade-game-selector',
-  imports: [],
+  imports: [ArcadeTitle],
   templateUrl: './arcade-game-selector.html',
   styleUrl: './arcade-game-selector.css',
 })

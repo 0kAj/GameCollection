@@ -5,7 +5,8 @@
     @for (game of games; track $index) {
       <div class="game-card" (click)="selectGame.emit(game)">
         <img [src]="game.imageSrc" />
-        <div class="game-title">{{ game.name }}</div>
+        <!-- <div class="game-title">{{ game.name }}</div> -->
+        <app-arcade-title [text]="game.name" fontSize="20px" />
       </div>
     }
   </div>

@@ -1,18 +1,76 @@
 .arcade-title {
   text-align: center;
-  font-size: 48px;
-  margin-top: 20px;
-
-  color: #fff;
-  text-shadow:
-    0 0 5px #ff0,
-    0 0 10px #f0f,
-    0 0 20px #0ff;
 
   animation: glow 2s infinite alternate;
 }
 
 @keyframes glow {
-  from { transform: scale(1); }
-  to { transform: scale(1.05); }
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+.arcade-title span {
+  text-shadow:
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 20px currentColor;
+
+  animation: flicker 2.5s infinite alternate;
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.c1 {
+  color: #ff004c;
+}
+.c2 {
+  color: #ff7a00;
+}
+.c3 {
+  color: #ffee00;
+}
+.c4 {
+  color: #00ff66;
+}
+.c5 {
+  color: #00fff2;
+}
+.c6 {
+  color: #0099ff;
+}
+.c7 {
+  color: #7a00ff;
+}
+.c8 {
+  color: #ff00e6;
+}
+.c9 {
+  color: #ff004c;
+}
+.c10 {
+  color: #ff7a00;
+}
+.c11 {
+  color: #ffee00;
+}
+.c12 {
+  color: #00ff66;
+}
+.c13 {
+  color: #00fff2;
+}
+.c14 {
+  color: #ff00e6;
 }

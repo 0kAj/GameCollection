@@ -4,10 +4,9 @@
   position: relative;
   overflow: hidden;
 
-  background: linear-gradient(
-    135deg,
-    #ffb347,
-    #ff8c42,
-    #e85d04
-  );
+  background: #0f172a;
+}
+
+.main-title {
+  margin-top: 40rem;
 }

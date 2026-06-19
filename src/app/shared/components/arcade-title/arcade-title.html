@@ -1,1 +1,7 @@
-<h1 class="arcade-title">GAME COLLECTION</h1>
+<p class="arcade-title" [style.font-size]="fontSize">
+  @for (letter of letters; track $index) {
+    <span [style.color]="colors[$index % colors.length]">
+      {{ letter === ' ' ? '\u00A0' : letter }}
+    </span>
+  }
+</p>
