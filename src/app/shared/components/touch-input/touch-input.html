@@ -3,9 +3,10 @@
     <div class="top-row">
       <button
         class="key btn btn-secondary"
-        (mousedown)="onUpPress()"
-        (mouseup)="onUpRelease()"
-        (mouseleave)="onUpRelease()"
+        (pointerdown)="onUpPress()"
+        (pointerup)="onUpRelease()"
+        (pointercancel)="onUpRelease()"
+        (pointerleave)="onUpRelease()"
       >
         ↑
       </button>
@@ -14,25 +15,28 @@
     <div class="bottom-row">
       <button
         class="key btn btn-secondary"
-        (mousedown)="onLeftPress()"
-        (mouseup)="onLeftRelease()"
-        (mouseleave)="onLeftRelease()"
+        (pointerdown)="onLeftPress()"
+        (pointerup)="onLeftRelease()"
+        (pointercancel)="onLeftRelease()"
+        (pointerleave)="onLeftRelease()"
       >
         ←
       </button>
       <button
         class="key btn btn-secondary"
-        (mousedown)="onDownPress()"
-        (mouseup)="onDownRelease()"
-        (mouseleave)="onDownRelease()"
+        (pointerdown)="onDownPress()"
+        (pointerup)="onDownRelease()"
+        (pointercancel)="onDownRelease()"
+        (pointerleave)="onDownRelease()"
       >
         ↓
       </button>
       <button
         class="key btn btn-secondary"
-        (mousedown)="onRightPress()"
-        (mouseup)="onRightRelease()"
-        (mouseleave)="onRightRelease()"
+        (pointerdown)="onRightPress()"
+        (pointerup)="onRightRelease()"
+        (pointercancel)="onRightRelease()"
+        (pointerleave)="onRightRelease()"
       >
         →
       </button>
