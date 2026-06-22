@@ -2,11 +2,10 @@ import { KeyboardInputMap } from '../../../core/input/KeyboardInputMap';
 import { KeyboardKeys } from '../../../core/input/KeyboardKeys';
 import { KeyboardInput } from './../../../core/input/KeyboardInput';
 import { Component } from '@angular/core';
-import { NgIf } from "../../../../../node_modules/@angular/common/types/_common_module-chunk";
 
 @Component({
   selector: 'app-touch-input',
-  imports: [NgIf],
+  imports: [],
   templateUrl: './touch-input.html',
   styleUrl: './touch-input.css',
 })
