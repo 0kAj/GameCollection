@@ -45,7 +45,15 @@ export class KeyboardInput {
     return Number(down) - Number(up);
   }
 
-  get isMoving(): boolean {
-    return this.horizontal !== 0 || this.vertical !== 0;
+  press(key: string) {
+    this.activeKeys.add(key);
+  }
+
+  unpress(key: string) {
+    this.activeKeys.delete(key);
+  }
+
+  get isTouchDevice(): boolean {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   }
 }

@@ -22,7 +22,11 @@
     <button class="btn btn-primary" (click)="restart()">Restart</button>
   </div>
 </header>
+
 <canvas #canvas></canvas>
+
+<app-touch-input />
+
 <app-game-over-screen
   [show]="statManager.gameOver()"
   [score]="statManager.score()"

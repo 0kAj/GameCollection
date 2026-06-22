@@ -8,11 +8,12 @@ import { GameEvents } from '../../core/engine/GameEvents';
 import { TimeFormatPipe } from '../../shared/pipes/time-format-pipe';
 import { GameOverScreen } from "../../shared/components/game-over-screen/game-over-screen";
 import { ScoreBoard } from "../../shared/components/score-board/score-board";
+import { TouchInput } from "../../shared/components/touch-input/touch-input";
 
 @Component({
   standalone: true,
   selector: 'app-collector-game',
-  imports: [TimeFormatPipe, GameOverScreen, ScoreBoard],
+  imports: [TimeFormatPipe, GameOverScreen, ScoreBoard, TouchInput],
   templateUrl: './collector-game.html',
   styleUrls: ['./collector-game.css'],
 })

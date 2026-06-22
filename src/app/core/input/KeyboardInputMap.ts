@@ -1,13 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
+import { KeyboardKeys } from './KeyboardKeys';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class KeyboardInputMap {
-  public static readonly LEFT = new Set(['arrowleft', 'a']);
-  public static readonly RIGHT = new Set(['arrowright', 'd']);
-  public static readonly UP = new Set(['arrowup', 'w']);
-  public static readonly DOWN = new Set(['arrowdown', 's']);
+  public static readonly LEFT: Set<string> = new Set([KeyboardKeys.ARROW_LEFT, KeyboardKeys.A]);
+  public static readonly RIGHT: Set<string> = new Set([KeyboardKeys.ARROW_RIGHT, KeyboardKeys.D]);
+  public static readonly UP: Set<string> = new Set([KeyboardKeys.ARROW_UP, KeyboardKeys.W]);
+  public static readonly DOWN: Set<string> = new Set([KeyboardKeys.ARROW_DOWN, KeyboardKeys.S]);
 
   public static readonly MOVEMENT_INPUT = new Set([
     ...KeyboardInputMap.LEFT,

@@ -1,0 +1,41 @@
+@if (keyboardInput.isTouchDevice) {
+  <div class="arrow-keys position-absolute start-50 translate-middle-x">
+    <div class="top-row">
+      <button
+        class="key btn btn-secondary"
+        (mousedown)="onUpPress()"
+        (mouseup)="onUpRelease()"
+        (mouseleave)="onUpRelease()"
+      >
+        ↑
+      </button>
+    </div>
+
+    <div class="bottom-row">
+      <button
+        class="key btn btn-secondary"
+        (mousedown)="onLeftPress()"
+        (mouseup)="onLeftRelease()"
+        (mouseleave)="onLeftRelease()"
+      >
+        ←
+      </button>
+      <button
+        class="key btn btn-secondary"
+        (mousedown)="onDownPress()"
+        (mouseup)="onDownRelease()"
+        (mouseleave)="onDownRelease()"
+      >
+        ↓
+      </button>
+      <button
+        class="key btn btn-secondary"
+        (mousedown)="onRightPress()"
+        (mouseup)="onRightRelease()"
+        (mouseleave)="onRightRelease()"
+      >
+        →
+      </button>
+    </div>
+  </div>
+}
