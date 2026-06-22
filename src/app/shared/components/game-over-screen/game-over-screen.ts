@@ -1,5 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { ScreenFader } from '../../../animation/screen-fader';
 
 @Component({
   selector: 'app-game-over-screen',
@@ -13,7 +14,7 @@ export class GameOverScreen {
   @Output() restart = new EventEmitter();
   @Output() back = new EventEmitter();
 
-  constructor(private router: Router) {}
+  constructor(private router: ScreenFader) {}
 
   @HostListener('document:keydown.enter')
   onEnter() {
@@ -22,6 +23,6 @@ export class GameOverScreen {
 
   onBack() {
     this.back.emit();
-    this.router.navigate(['/']);
+    this.router.navigateFadedTo(['/']);
   }
 }

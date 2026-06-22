@@ -6,3 +6,12 @@
   font-family: Inter, system-ui, sans-serif;
   overflow: hidden;
 }
+
+.scene {
+  opacity: 1;
+  transition: opacity 600ms ease;
+}
+
+.scene.fade-out {
+  opacity: 0;
+}

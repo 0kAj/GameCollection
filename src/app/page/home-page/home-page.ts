@@ -6,6 +6,7 @@ import { ArcadeGameSelector } from '../../shared/components/arcade-game-selector
 import { ArcadeGame } from '../../shared/components/arcade-game-selector/models/ArcadeGame';
 import { Router } from '@angular/router';
 import { ScoreBoard } from "../../shared/components/score-board/score-board";
+import { ScreenFader } from '../../animation/screen-fader';
 
 @Component({
   selector: 'app-home-page',
@@ -16,17 +17,13 @@ import { ScoreBoard } from "../../shared/components/score-board/score-board";
 export class HomePage {
   petUIOpen = signal(false);
 
-  constructor(private router: Router) {}
+  constructor(private router: ScreenFader) {}
 
   togglePetUI() {
     this.petUIOpen.update(v => !v);
   }
 
   openGame(game: ArcadeGame) {
-    //todo add fade out effect
-
-    //todo wait until fully black!
-
-    this.router.navigate([game.href]);
+    this.router.navigateFadedTo([game.href]);
   }
 }
