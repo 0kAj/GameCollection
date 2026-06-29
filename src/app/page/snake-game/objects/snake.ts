@@ -1,6 +1,10 @@
 import { loadImage } from '../../../core/assets/image-loader';
 import { GameObject } from '../../../core/engine/GameObject';
-import { SNAKE_BODY_SPRITE_SRC, SNAKE_HEAD_SPRITE_SRC } from '../logic/snake-game.constants';
+import {
+  SNAKE_BODY_SPRITE_SRC,
+  SNAKE_HEAD_SPRITE_SRC,
+  TICK_SECONDS,
+} from '../logic/snake-game.constants';
 import { GridSize } from '../models/grid-size';
 import { Vector2 } from '../../../core/models/vector2';
 
@@ -10,6 +14,10 @@ export class Snake extends GameObject {
   private segments: Vector2[];
   private readonly bodySprite = loadImage(SNAKE_BODY_SPRITE_SRC);
   private gridSize: GridSize | null = null;
+
+  private elapsed: number = 0;
+  private hasMoved: boolean = false;
+  private pendingGrowth: number = 0;
 
   constructor(start: Vector2) {
     super(Vector2.ZERO, 0, 0, loadImage(SNAKE_HEAD_SPRITE_SRC));
@@ -28,19 +36,25 @@ export class Snake extends GameObject {
     this.pendingDirection = direction;
   }
 
-  move(grow: boolean): void {
+  moveOneCell(): void {
     this.direction = this.pendingDirection;
     this.segments.unshift(this.nextHead);
 
-    if (!grow) {
+    if (this.pendingGrowth > 0) {
+      this.pendingGrowth--;
+    } else {
       this.segments.pop();
     }
 
     this.updatePixelPosition();
   }
 
-  willEat(food: Vector2): boolean {
-    return this.nextHead.sameVector(food);
+  grow(): void {
+    this.pendingGrowth++;
+  }
+
+  get movedThisFrame(): boolean {
+    return this.hasMoved;
   }
 
   hasHitWall(grid: GridSize): boolean {
@@ -54,7 +68,14 @@ export class Snake extends GameObject {
   }
 
   override update(delta: number): void {
-    // Movement is handled by move() method in game logic
+    this.elapsed += delta;
+    if (this.elapsed >= TICK_SECONDS) {
+      this.elapsed -= TICK_SECONDS;
+      this.moveOneCell();
+      this.hasMoved = true;
+    } else {
+      this.hasMoved = false;
+    }
   }
 
   override render(ctx: CanvasRenderingContext2D): void {
@@ -88,7 +109,7 @@ export class Snake extends GameObject {
     return this.segments;
   }
 
-  private get head(): Vector2 {
+  get head(): Vector2 {
     return this.segments[0];
   }
 

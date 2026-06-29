@@ -10,7 +10,6 @@ import { GameEvents } from '../../../core/engine/GameEvents';
 export class SnakeGameLogic implements IGame {
   private snake!: Snake;
   private food!: Food;
-  private elapsed = 0;
   private isGameOver = false;
 
   private currentGrid!: GridSize;
@@ -18,12 +17,12 @@ export class SnakeGameLogic implements IGame {
   constructor(
     private input: KeyboardInput,
     private readonly ctx: CanvasRenderingContext2D,
-    private events: GameEvents
+    private events: GameEvents,
   ) {
     this.reset();
   }
 
-  start(): void { }
+  start(): void {}
 
   update(delta: number): void {
     if (this.isGameOver) {
@@ -38,14 +37,11 @@ export class SnakeGameLogic implements IGame {
       this.snake.setDirection(requestedDirection);
     }
 
-    this.elapsed += delta;
-    if (this.elapsed < TICK_SECONDS) {
+    this.snake.update(delta);
+
+    if (!this.snake.movedThisFrame) {
       return;
     }
-
-    this.elapsed = 0;
-    const grows = this.snake.willEat(this.food.gridPos);
-    this.snake.move(grows);
 
     if (this.snake.hasHitWall(this.currentGrid) || this.snake.hasHitSelf()) {
       this.isGameOver = true;
@@ -53,7 +49,8 @@ export class SnakeGameLogic implements IGame {
       return;
     }
 
-    if (grows) {
+    if (this.snake.head.sameVector(this.food.gridPos)) {
+      this.snake.grow();
       this.events.onScore(1);
       this.food.respawn(this.currentGrid, this.snake.body);
       this.food.updatePixelPosition(this.currentGrid);
@@ -70,12 +67,7 @@ export class SnakeGameLogic implements IGame {
 
   private reset(): void {
     const grid = this.grid;
-    this.snake = new Snake(
-      new Vector2(
-        Math.floor(grid.columns / 2),
-        Math.floor(grid.rows / 2)
-      )
-    );
+    this.snake = new Snake(new Vector2(Math.floor(grid.columns / 2), Math.floor(grid.rows / 2)));
     this.snake.setGridSize(grid);
     this.food = new Food();
     this.food.respawn(grid, this.snake.body);
