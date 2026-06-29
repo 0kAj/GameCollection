@@ -7,11 +7,13 @@ import {
 } from '../logic/snake-game.constants';
 import { GridSize } from '../models/grid-size';
 import { Vector2 } from '../../../core/models/vector2';
+import { lerp } from '../../../core/utils/lerp';
 
 export class Snake extends GameObject {
   private direction: Vector2 = Vector2.RIGHT;
   private pendingDirection: Vector2 = Vector2.RIGHT;
-  private segments: Vector2[];
+  private segments: Vector2[] = [];
+  private previousSegments: Vector2[] = [];
   private readonly bodySprite = loadImage(SNAKE_BODY_SPRITE_SRC);
   private gridSize: GridSize | null = null;
 
@@ -37,6 +39,8 @@ export class Snake extends GameObject {
   }
 
   moveOneCell(): void {
+    this.previousSegments = this.segments.map((s) => new Vector2(s.x, s.y));
+
     this.direction = this.pendingDirection;
     this.segments.unshift(this.nextHead);
 
@@ -81,10 +85,18 @@ export class Snake extends GameObject {
   override render(ctx: CanvasRenderingContext2D): void {
     if (!this.gridSize) return;
 
+    const t: number = this.movementProgress;
+
     this.segments.forEach((segment, index) => {
+      const previous = this.previousSegments[index] ?? segment;
+
       const sprite = index === 0 ? this.sprite : this.bodySprite;
-      const pixelX = segment.x * this.gridSize!.cellWidth;
-      const pixelY = segment.y * this.gridSize!.cellHeight;
+
+      const renderX = lerp(previous.x, segment.x, t);
+      const renderY = lerp(previous.y, segment.y, t);
+
+      const pixelX = renderX * this.gridSize!.cellWidth;
+      const pixelY = renderY * this.gridSize!.cellHeight;
 
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(sprite, pixelX, pixelY, this.gridSize!.cellWidth, this.gridSize!.cellHeight);
@@ -119,5 +131,9 @@ export class Snake extends GameObject {
 
   private isReverse(direction: Vector2): boolean {
     return this.direction.reverse().sameVector(direction);
+  }
+
+  get movementProgress(): number {
+    return this.elapsed / TICK_SECONDS;
   }
 }
