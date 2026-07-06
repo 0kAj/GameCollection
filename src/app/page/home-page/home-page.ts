@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ArcadeTitle } from '../../shared/components/arcade-title/arcade-title';
 import { Pet } from '../../shared/components/pet/pet';
 import { PetUi } from '../../shared/components/pet-ui/pet-ui';
@@ -7,6 +7,8 @@ import { ArcadeGame } from '../../shared/components/arcade-game-selector/models/
 import { Router } from '@angular/router';
 import { ScoreBoard } from "../../shared/components/score-board/score-board";
 import { ScreenFader } from '../../animation/screen-fader';
+import { SoundService } from '../../core/sound/sound.service';
+import { AudioClip } from '../../core/sound/AudioClip';
 
 @Component({
   selector: 'app-home-page',
@@ -14,16 +16,23 @@ import { ScreenFader } from '../../animation/screen-fader';
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
-export class HomePage {
+export class HomePage implements OnInit {
   petUIOpen = signal(false);
 
-  constructor(private router: ScreenFader) {}
+  constructor(private router: ScreenFader, private sound: SoundService) {}
+
+  ngOnInit(): void {
+    this.sound.playBGMusic(AudioClip.BgLobby);
+  }
 
   togglePetUI() {
     this.petUIOpen.update(v => !v);
+    this.sound.playSfx(AudioClip.Click);
   }
 
   openGame(game: ArcadeGame) {
     this.router.navigateFadedTo([game.href]);
+    this.sound.stopBGMusic();
+    this.sound.playSfx(AudioClip.SelectGame);
   }
 }
