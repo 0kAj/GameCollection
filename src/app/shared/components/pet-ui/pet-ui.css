@@ -89,3 +89,29 @@
     opacity: 1;
   }
 }
+
+.pet-image.feeding {
+  animation: feedAnimation 500ms ease;
+}
+
+@keyframes feedAnimation {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  20% {
+    transform: translateY(-10px) rotate(-8deg);
+  }
+
+  40% {
+    transform: translateY(0) rotate(8deg);
+  }
+
+  60% {
+    transform: translateY(-6px) rotate(-4deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
