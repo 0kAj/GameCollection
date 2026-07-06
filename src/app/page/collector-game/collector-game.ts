@@ -1,9 +1,9 @@
 import { StatManager } from './../../shared/stat-manager';
 import { Component } from '@angular/core';
-import { CanvasGameComponent } from '../../core/engine/CanvasGameComponent';
+import { AbstractCanvasGameComponent } from '../../core/engine/AbstractCanvasGameComponent';
 import { CollectorGameLogic } from './logic/collector-game.logic';
-import { GameEngine } from '../../core/engine/GameEngine';
-import { KeyboardInput } from '../../core/input/KeyboardInput';
+import { GameEngine } from '../../core/engine/GameEngine.service';
+import { KeyboardInput } from '../../core/input/KeyboardInput.service';
 import { GameEvents } from '../../core/engine/GameEvents';
 import { TimeFormatPipe } from '../../shared/pipes/time-format-pipe';
 import { GameOverScreen } from "../../shared/components/game-over-screen/game-over-screen";
@@ -17,7 +17,7 @@ import { TouchInput } from "../../shared/components/touch-input/touch-input";
   templateUrl: './collector-game.html',
   styleUrls: ['./collector-game.css'],
 })
-export class CollectorGame extends CanvasGameComponent<CollectorGameLogic> {
+export class CollectorGame extends AbstractCanvasGameComponent<CollectorGameLogic> {
   constructor(
     engine: GameEngine,
     statManager: StatManager,

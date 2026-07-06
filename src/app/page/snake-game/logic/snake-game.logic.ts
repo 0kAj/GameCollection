@@ -1,5 +1,5 @@
 import { IGame } from '../../../core/engine/IGame';
-import { KeyboardInput } from '../../../core/input/KeyboardInput';
+import { KeyboardInput } from '../../../core/input/KeyboardInput.service';
 import { GridSize } from '../models/grid-size';
 import { Vector2 } from '../../../core/models/vector2';
 import { Food } from '../objects/food';

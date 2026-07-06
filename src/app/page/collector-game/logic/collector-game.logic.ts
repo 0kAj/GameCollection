@@ -1,5 +1,5 @@
 import { IGame } from '../../../core/engine/IGame';
-import { KeyboardInput } from '../../../core/input/KeyboardInput';
+import { KeyboardInput } from '../../../core/input/KeyboardInput.service';
 import { Collectible } from '../objects/collectible';
 import { Player } from '../objects/player';
 import { Size } from '../../../core/models/size';

@@ -1,6 +1,6 @@
 import { KeyboardInputMap } from '../../../core/input/KeyboardInputMap';
 import { KeyboardKeys } from '../../../core/input/KeyboardKeys';
-import { KeyboardInput } from './../../../core/input/KeyboardInput';
+import { KeyboardInput } from '../../../core/input/KeyboardInput.service';
 import { Component } from '@angular/core';
 
 @Component({

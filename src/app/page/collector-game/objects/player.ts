@@ -1,6 +1,6 @@
 import { loadImage } from '../../../core/assets/image-loader';
 import { GameObject } from '../../../core/engine/GameObject';
-import { KeyboardInput } from '../../../core/input/KeyboardInput';
+import { KeyboardInput } from '../../../core/input/KeyboardInput.service';
 import {
   PLAYER_SIZE,
   PLAYER_SPEED,
