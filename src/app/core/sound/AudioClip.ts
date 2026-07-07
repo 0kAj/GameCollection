@@ -8,4 +8,6 @@ export enum AudioClip {
   Feed = 'assets/sfx/feed.wav',
   Collect = 'assets/sfx/coin/coin1.wav',
   GameOver = 'assets/sfx/gameover.wav',
+  Error = 'assets/sfx/error.wav',
+  Hover = 'assets/sfx/coin/coin8.wav',
 }

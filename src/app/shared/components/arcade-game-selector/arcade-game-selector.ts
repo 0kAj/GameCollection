@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { IGame } from '../../../core/engine/IGame';
 import { ArcadeGame } from './models/ArcadeGame';
-import { ArcadeTitle } from "../arcade-title/arcade-title";
+import { ArcadeTitle } from '../arcade-title/arcade-title';
+import { SoundService } from '../../../core/sound/sound.service';
+import { AudioClip } from '../../../core/sound/AudioClip';
 
 @Component({
   selector: 'app-arcade-game-selector',
@@ -12,10 +14,14 @@ import { ArcadeTitle } from "../arcade-title/arcade-title";
 export class ArcadeGameSelector {
   @Output() selectGame = new EventEmitter<ArcadeGame>();
 
-  //todo ArcadeGame class
+  constructor(private sound: SoundService) {}
 
-  public games = [ //todo extract it to external const
+  public games = [
     new ArcadeGame('Collector', 'assets/games/FoodCollector.png', 'collector'),
-    new ArcadeGame('Snake', 'assets/games/Snake.png', 'snake'), //todo change img
-  ]
+    new ArcadeGame('Snake', 'assets/games/Snake.png', 'snake'),
+  ];
+
+  playHoverSound() {
+    this.sound.playSfx(AudioClip.Hover, 0.8);
+  }
 }

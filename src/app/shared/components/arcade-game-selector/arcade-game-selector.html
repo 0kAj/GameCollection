@@ -3,7 +3,7 @@
 
   <div class="game-grid">
     @for (game of games; track $index) {
-      <div class="game-card" (click)="selectGame.emit(game)">
+      <div class="game-card" (click)="selectGame.emit(game)" (mouseenter)="playHoverSound()">
         <img [src]="game.imageSrc" />
         <!-- <div class="game-title">{{ game.name }}</div> -->
         <app-arcade-title [text]="game.name" fontSize="20px" />

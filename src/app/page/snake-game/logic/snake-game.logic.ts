@@ -4,7 +4,7 @@ import { GridSize } from '../models/grid-size';
 import { Vector2 } from '../../../core/models/vector2';
 import { Food } from '../objects/food';
 import { Snake } from '../objects/snake';
-import { MIN_COLUMNS, MIN_ROWS, TARGET_CELL_SIZE, TICK_SECONDS } from './snake-game.constants';
+import { MIN_COLUMNS, MIN_ROWS, SCORE_PER_APPLE, TARGET_CELL_SIZE, TICK_SECONDS } from './snake-game.constants';
 import { GameEvents } from '../../../core/engine/GameEvents';
 
 export class SnakeGameLogic implements IGame {
@@ -51,7 +51,7 @@ export class SnakeGameLogic implements IGame {
 
     if (this.snake.head.sameVector(this.food.gridPos)) {
       this.snake.grow();
-      this.events.onScore(1);
+      this.events.onScore(SCORE_PER_APPLE);
       this.food.respawn(this.currentGrid, this.snake.body);
       this.food.updatePixelPosition(this.currentGrid);
     }
