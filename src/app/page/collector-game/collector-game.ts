@@ -1,4 +1,3 @@
-import { StatManager } from './../../shared/stat-manager';
 import { Component, OnInit } from '@angular/core';
 import { AbstractCanvasGameComponent } from '../../core/engine/AbstractCanvasGameComponent';
 import { CollectorGameLogic } from './logic/collector-game.logic';
@@ -11,6 +10,7 @@ import { ScoreBoard } from "../../shared/components/score-board/score-board";
 import { TouchInput } from "../../shared/components/touch-input/touch-input";
 import { SoundService } from '../../core/sound/sound.service';
 import { AudioClip } from '../../core/sound/AudioClip';
+import { StatManager } from '../../shared/services/stat-manager';
 
 @Component({
   standalone: true,

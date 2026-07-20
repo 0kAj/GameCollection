@@ -1,6 +1,8 @@
-import { Injectable, Service, signal } from '@angular/core';
-import { SoundService } from '../core/sound/sound.service';
-import { AudioClip } from '../core/sound/AudioClip';
+import { effect, Injectable, OnDestroy, signal } from '@angular/core';
+import { SoundService } from '../../core/sound/sound.service';
+import { AudioClip } from '../../core/sound/AudioClip';
+import { StorageManager } from './storage-manager';
+import { Storage } from './storage/storage.type';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +15,22 @@ export class StatManager {
   timeleft = signal(0);
   combo = signal(0);
 
-  constructor(private sound: SoundService) {}
+  storage: Storage;
+
+  constructor(
+    private sound: SoundService,
+    private storageManager: StorageManager,
+  ) {
+    this.storage = storageManager.loadStorage();
+
+    this.score.set(this.storage.applesTotal);
+
+    effect(() => {
+      this.storage.applesTotal = this.score();
+
+      this.storageManager.saveStorage(this.storage);
+    });
+  }
 
   updateStats(stats: { timeleft: number; combo: number }): void {
     this.timeleft.set(stats.timeleft);

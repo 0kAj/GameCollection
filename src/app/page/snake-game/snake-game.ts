@@ -4,13 +4,13 @@ import { AbstractCanvasGameComponent } from '../../core/engine/AbstractCanvasGam
 import { SnakeGameLogic } from './logic/snake-game.logic';
 import { GameEngine } from '../../core/engine/GameEngine.service';
 import { KeyboardInput } from '../../core/input/KeyboardInput.service';
-import { StatManager } from '../../shared/stat-manager';
 import { GameEvents } from '../../core/engine/GameEvents';
 import { GameOverScreen } from '../../shared/components/game-over-screen/game-over-screen';
 import { ScoreBoard } from '../../shared/components/score-board/score-board';
 import { TouchInput } from '../../shared/components/touch-input/touch-input';
 import { SoundService } from '../../core/sound/sound.service';
 import { AudioClip } from '../../core/sound/AudioClip';
+import { StatManager } from '../../shared/services/stat-manager';
 
 @Component({
   standalone: true,

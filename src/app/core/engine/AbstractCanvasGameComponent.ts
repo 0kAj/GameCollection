@@ -1,8 +1,8 @@
-import { StatManager } from '../../shared/stat-manager';
 import { AfterViewInit, Directive, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { GameEngine } from './GameEngine.service';
 import { IGame } from './IGame';
 import { GameEvents } from './GameEvents';
+import { StatManager } from '../../shared/services/stat-manager';
 
 @Directive()
 export abstract class AbstractCanvasGameComponent<TGame extends IGame> implements AfterViewInit, OnDestroy {

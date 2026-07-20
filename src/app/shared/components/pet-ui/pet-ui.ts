@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { StatManager } from '../../stat-manager';
+import { StatManager } from '../../services/stat-manager';
 
 @Component({
   selector: 'app-pet-ui',
