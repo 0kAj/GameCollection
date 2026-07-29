@@ -68,7 +68,7 @@ export class StatManager {
   addScore(scoreToAdd: number): void {
     this.score.update((currentScore) => currentScore + scoreToAdd);
 
-    this.storage.applesTotal += scoreToAdd;
+    this.storage.applesEverCollected += scoreToAdd;
     this.storageManager.saveStorage(this.storage);
 
     this.sound.playSfx(AudioClip.Collect);
