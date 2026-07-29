@@ -92,8 +92,13 @@ export class Snake extends GameObject {
 
       const sprite = index === 0 ? this.sprite : this.bodySprite;
 
+      // smooth mode
       const renderX = lerp(previous.x, segment.x, t);
       const renderY = lerp(previous.y, segment.y, t);
+      
+      // blocky mode
+      // const renderX = segment.x;
+      // const renderY = segment.y;
 
       const pixelX = renderX * this.gridSize!.cellWidth;
       const pixelY = renderY * this.gridSize!.cellHeight;
