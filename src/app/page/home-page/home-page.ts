@@ -4,12 +4,11 @@ import { Pet } from '../../shared/components/pet/pet';
 import { PetUi } from '../../shared/components/pet-ui/pet-ui';
 import { ArcadeGameSelector } from '../../shared/components/arcade-game-selector/arcade-game-selector';
 import { ArcadeGame } from '../../shared/components/arcade-game-selector/models/ArcadeGame';
-import { Router } from '@angular/router';
 import { ScoreBoard } from "../../shared/components/score-board/score-board";
 import { ScreenFader } from '../../animation/screen-fader';
 import { SoundService } from '../../core/sound/sound.service';
 import { AudioClip } from '../../core/sound/AudioClip';
-import { ArcadeHighscore } from "../../shared/components/arcade-highscore/arcade-highscore/arcade-highscore";
+import { ArcadeHighscore } from "../../shared/components/arcade-highscore/arcade-highscore";
 
 @Component({
   selector: 'app-home-page',

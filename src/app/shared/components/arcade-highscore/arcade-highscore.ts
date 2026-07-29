@@ -1,7 +1,7 @@
-import { StorageManager } from './../../../services/storage-manager';
+import { StorageManager } from './../../services/storage-manager';
 import { Component } from '@angular/core';
-import { ArcadeTitle } from "../../arcade-title/arcade-title";
-import { CurrentStorageVersion } from '../../../services/storage/storage.type';
+import { ArcadeTitle } from "../arcade-title/arcade-title";
+import { CurrentStorageVersion } from '../../services/storage/storage.type';
 
 @Component({
   selector: 'app-arcade-highscore',
