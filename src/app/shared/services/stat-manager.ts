@@ -1,8 +1,8 @@
-import { effect, Injectable, OnDestroy, signal } from '@angular/core';
+import { effect, Injectable, signal } from '@angular/core';
 import { SoundService } from '../../core/sound/sound.service';
 import { AudioClip } from '../../core/sound/AudioClip';
 import { StorageManager } from './storage-manager';
-import { Storage } from './storage/storage.type';
+import { CurrentStorageVersion } from './storage/storage.type';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class StatManager {
   timeleft = signal(0);
   combo = signal(0);
 
-  storage: Storage;
+  storage: CurrentStorageVersion;
 
   constructor(
     private sound: SoundService,

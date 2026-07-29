@@ -1,0 +1,32 @@
+<div class="highscore-machine shadow-lg">
+  <h3 class="highscore-label">HIGH SCORES</h3>
+
+  <div class="score-screen">
+    <div class="game-score">
+      <app-arcade-title fontSize="22px" text="COLLECTOR" />
+
+      <div class="stat-entry">
+        <span>Highest Combo</span>
+        <span class="value">{{storage.longestSnake}}</span>
+      </div>
+    </div>
+
+    <div class="game-score">
+      <app-arcade-title fontSize="22px" text="SNAKE" />
+
+      <div class="stat-entry">
+        <span>Longest Snake</span>
+        <span class="value">{{storage.collectorHighestCombo}}</span>
+      </div>
+    </div>
+
+    <div class="game-score">
+      <app-arcade-title fontSize="22px" text="TOTAL" />
+
+      <div class="stat-entry">
+        <span>Apples collected</span>
+        <span class="value">{{storage.applesEverCollected}}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,10 +9,11 @@ import { ScoreBoard } from "../../shared/components/score-board/score-board";
 import { ScreenFader } from '../../animation/screen-fader';
 import { SoundService } from '../../core/sound/sound.service';
 import { AudioClip } from '../../core/sound/AudioClip';
+import { ArcadeHighscore } from "../../shared/components/arcade-highscore/arcade-highscore/arcade-highscore";
 
 @Component({
   selector: 'app-home-page',
-  imports: [ArcadeTitle, Pet, ArcadeGameSelector, ScoreBoard, PetUi],
+  imports: [ArcadeTitle, Pet, ArcadeGameSelector, ScoreBoard, PetUi, ArcadeHighscore],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })

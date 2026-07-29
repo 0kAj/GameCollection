@@ -1,7 +1,12 @@
 <div class="home-screen">
   <app-arcade-title text="GAME COLLECTION" fontSize="48px" />
-  
-  <app-arcade-game-selector (selectGame)="openGame($event)" />
+
+  <div class="arcade-layout">
+    <app-arcade-game-selector (selectGame)="openGame($event)" />
+
+    <app-arcade-highscore />
+  </div>
+
   <app-pet (openPetUI)="togglePetUI()" />
 
   @if (petUIOpen()) {
