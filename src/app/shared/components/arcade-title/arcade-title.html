@@ -1,4 +1,4 @@
-<p class="arcade-title" [style.font-size]="fontSize">
+<p class="arcade-title user-select-none" [style.font-size]="fontSize">
   @for (letter of letters; track $index) {
     <span [style.color]="colors[$index % colors.length]">
       {{ letter === ' ' ? '\u00A0' : letter }}
