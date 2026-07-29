@@ -10,7 +10,7 @@ Collect Apples to feed your pet.
 ## Roadmap
 
 - [x] Persistent Storage
-- [ ] Highscore Storage
+- [x] Highscore Storage
 - [ ] Rewrite Pet rendering
   - [ ] Pet can change color when fed 10 times
   - [ ] Pet is animated
