@@ -3,6 +3,7 @@ import { SoundService } from '../../core/sound/sound.service';
 import { AudioClip } from '../../core/sound/AudioClip';
 import { StorageManager } from './storage-manager';
 import { CurrentStorageVersion } from './storage/storage.type';
+import { GameStats } from '../../core/engine/GameEvents';
 
 @Injectable({
   providedIn: 'root',
@@ -32,10 +33,37 @@ export class StatManager {
     });
   }
 
-  updateStats(stats: { timeleft: number; combo: number }): void {
-    this.timeleft.set(stats.timeleft);
-    this.combo.set(stats.combo);
+updateStats(stats: GameStats): void {
+  let storageChanged = false;
+
+  Object.entries(stats).forEach(([key, value]) => {
+    switch (key) {
+      case 'timeleft':
+        this.timeleft.set(value);
+        break;
+
+      case 'combo':
+        this.combo.set(value);
+
+        if (value > this.storage.collectorHighestCombo) {
+          this.storage.collectorHighestCombo = value;
+          storageChanged = true;
+        }
+        break;
+
+      case 'snakeLength':
+        if (value > this.storage.longestSnake) {
+          this.storage.longestSnake = value;
+          storageChanged = true;
+        }
+        break;
+    }
+  });
+
+  if (storageChanged) {
+    this.storageManager.saveStorage(this.storage);
   }
+}
 
   addScore(scoreToAdd: number): void {
     this.score.update((currentScore) => currentScore + scoreToAdd);

@@ -95,7 +95,7 @@ export class Snake extends GameObject {
       // smooth mode
       const renderX = lerp(previous.x, segment.x, t);
       const renderY = lerp(previous.y, segment.y, t);
-      
+
       // blocky mode
       // const renderX = segment.x;
       // const renderY = segment.y;
@@ -140,5 +140,9 @@ export class Snake extends GameObject {
 
   get movementProgress(): number {
     return this.elapsed / TICK_SECONDS;
+  }
+
+  get length(): number {
+    return this.segments.length;
   }
 }

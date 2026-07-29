@@ -51,6 +51,9 @@ export class SnakeGameLogic implements IGame {
 
     if (this.snake.head.sameVector(this.food.gridPos)) {
       this.snake.grow();
+      this.events.onStats?.({
+        snakeLength: this.snake.length
+      });
       this.events.onScore(SCORE_PER_APPLE);
       this.food.respawn(this.currentGrid, this.snake.body);
       this.food.updatePixelPosition(this.currentGrid);
