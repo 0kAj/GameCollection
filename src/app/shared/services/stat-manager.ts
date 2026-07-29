@@ -33,40 +33,44 @@ export class StatManager {
     });
   }
 
-updateStats(stats: GameStats): void {
-  let storageChanged = false;
+  updateStats(stats: GameStats): void {
+    let storageChanged = false;
 
-  Object.entries(stats).forEach(([key, value]) => {
-    switch (key) {
-      case 'timeleft':
-        this.timeleft.set(value);
-        break;
+    Object.entries(stats).forEach(([key, value]) => {
+      switch (key) {
+        case 'timeleft':
+          this.timeleft.set(value);
+          break;
 
-      case 'combo':
-        this.combo.set(value);
+        case 'combo':
+          this.combo.set(value);
 
-        if (value > this.storage.collectorHighestCombo) {
-          this.storage.collectorHighestCombo = value;
-          storageChanged = true;
-        }
-        break;
+          if (value > this.storage.collectorHighestCombo) {
+            this.storage.collectorHighestCombo = value;
+            storageChanged = true;
+          }
+          break;
 
-      case 'snakeLength':
-        if (value > this.storage.longestSnake) {
-          this.storage.longestSnake = value;
-          storageChanged = true;
-        }
-        break;
+        case 'snakeLength':
+          if (value > this.storage.longestSnake) {
+            this.storage.longestSnake = value;
+            storageChanged = true;
+          }
+          break;
+      }
+    });
+
+    if (storageChanged) {
+      this.storageManager.saveStorage(this.storage);
     }
-  });
-
-  if (storageChanged) {
-    this.storageManager.saveStorage(this.storage);
   }
-}
 
   addScore(scoreToAdd: number): void {
     this.score.update((currentScore) => currentScore + scoreToAdd);
+
+    this.storage.applesTotal += scoreToAdd;
+    this.storageManager.saveStorage(this.storage);
+
     this.sound.playSfx(AudioClip.Collect);
   }
 
